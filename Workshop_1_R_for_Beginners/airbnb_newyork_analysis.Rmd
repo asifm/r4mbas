@@ -316,9 +316,96 @@ In our case, we'll go with the last option.
 
 *Discuss: Is the last option the best for our dataset? What would be a better alternative?*
 
-## Data manipluation
+## Data manipluation and exploration
 
-dplyr functions discussed in this section
+Finally, we're ready to dive into the data. We'll use six functions — think of them as six verbs — to slice and dice the data in all kinds of ways. These functions come from the dplyr library. These are:
+
+- filter
+- select
+- mutate
+- arrange
+- summarize
+- group_by
+
+We'll first learn these functions one by one and later we'll learn how to combine them for powerful analysis.
+
+For each of these functions, we provide the name of the dataframe as the first parameter. The subsequent parameters inform what the function is to do with the dataframe.
+
+### filter
+
+You use `filter`, when you want a subset of the rows based on one or more conditions. The returned rows will be those that meet the condition(s).
+
+The syntax is: `filter(name_of_dataframe, condition1, condition2, ...)`
+
+Use these *logical operators* to create conditions:
+  
+  <	      less than
+  <=	    less than or equal to
+  >	      greater than
+  >=	    greater than or equal to
+  ==	    exactly equal to
+  !=	    not equal to
+  !x	    Not x
+  x | y	  x OR y
+  x & y	  x AND y
+
+
+
+Example: Return a dataframe with only those rows where the neighbourhood is Chelsea.
+```{r}
+filter(df, neighbourhood == "Chelsea")
+```
+
+Example: Return a dataframe with only those rows where the price is more than 5000.
+```{r}
+filter(df, price > 8000)
+```
+
+You can combine multiple conditions.
+
+Example: Return a dataframe with rows where borough is Manhattan and price is less than 50.
+```{r}
+filter(df, borough == "Manhattan", price < 20)
+```
+
+Example: Return a dataframe with rows where cancellation_policy is flexible *or* accommodates more than 2.
+```{r}
+filter(df, cancellation_policy == "flexible" | accommodates > 2 )
+```
+
+Example: Return a dataframe with rows where number_of_reviews is *not* 0
+```{r}
+filter(df, number_of_reviews != 0)
+```
+
+
+Note: when multiple conditions are separated by commas are assumed to have *and* logical operator. Using `&` instead would be the same thing. For *or* and other logical operators, we have to explicitly use the appropriate logical operator (e.g. `|` for *or*).
+
+*Exercise: Return a dataframe with rows where number of bedrooms is not 1 and property_type is House*
+```{r}
+
+```
+
+*Exercise: Return a dataframe with rows where host_response_time is within an hour or host_response_rate is more than 90% or calendar was updated today*
+```{r}
+
+```
+
+### select
+
+Our second verb is `select`, which is used to return a subset of the columns.
+
+The syntax is: `select(name_of_dataframe, name_of_column1, name_of_column2, ...)`
+
+Example: Return a dataframe with only the *beds* column
+```{r}
+select(df, beds)
+```
+
+Example: Return a dataframe with columns host_response_time, cancellation_policy, and neighbourhood
+```{r}
+select(df, host_response_time, cancellation_policy, neighbourhood)
+```
 
 
 ----
