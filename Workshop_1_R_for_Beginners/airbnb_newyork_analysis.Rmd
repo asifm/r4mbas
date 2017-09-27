@@ -1,0 +1,324 @@
+---
+title: "A Survey of New York City's Airbnb Listings"
+subtitle: 'R for beginners: a data analysis workshop'
+author: "Asif Mehedi"
+date: '`r Sys.Date()`'
+output:
+  html_notebook:
+    toc: true
+    theme: flatly
+    highlight: haddock
+---
+
+# Goals
+
+- Learn to think like a data analyst
+- Learn the basics of R programming language
+- Learn some powerful techniques for analyzing and exploring a dataset
+
+we'll do these by taking a close look at some interesting data: Airbnb listings for New York City in May 2017.
+
+It's Okay if you can't start using these techniques right away after the workshop. To be comfortable with a tool like R takes some time and practice. But we do hope that your exposure today to these tools and techniques will open your eyes about possibilities and motivate you to keep learning.
+
+# RStudio
+
+RStudio is a free program that makes writing R code much more enjoyable and efficient.
+
+It has four main panes. This one is the code editor (also known as script editor and source editor). This is where we'll spend most of our time. We'll say more about the other panes when the time comes. 
+
+# R Notebook
+
+Before starting the analysis, let's understand how this document works. I'm assuming you're reading this on RStudio. 
+
+This is an R Notebook. An R Notebook contains commentary interspersed with code chunks. The code chunks can be run (executed) independently and interactively. The output will appear below the code chunk. R Notebooks are easy to convert to well-formatted final documents as a pdf file, a webpage, or an MS Word file. [More here](http://rmarkdown.rstudio.com/r_notebooks.html)
+
+Click on the `preview` button above to get an idea. 
+
+What you're reading is the commentary and what you see below is the container for a code chunk.
+
+```{r}
+# The code goes here
+```
+
+To run a code chunk, click on the little triangle at the right edge of the code chunk. Or, use the keyboard shortcut **CTRL + SHIFT + ENTER**.
+
+*Exercise: Run the chunk below and see what happens.*
+```{r}
+a <- 5 + 7
+print(a)
+```
+
+As you see, the output appears under the code. This way you can immediately see the result of the code you write at all steps of the analysis.
+
+(Do you know what's going on in the code above? We'll talk about variables and assignments later.)
+
+Feel free to add your commentary and code anywhere in this document. You can always download the unmodified version from [here](https://github.com/asifm/tech-workshops/tree/master/Datasets). 
+
+To write your own code chunk, look for the **insert** button above and then select **R**. Or, use the keyboard shortcut **CTRL + ALT + I**. 
+
+*Exercise: Place the cursor below and create a placeholder for writing code. Now write some code and run the code. For example, find the result of `3543 / 562`.*
+
+
+
+
+
+# The data
+
+The dataset contains almost all the listings in NYC in May 2017.The data came from [Inside Airbnb](http://insideairbnb.com/get-the-data.html).
+
+It's always a good idea to approach a new dataset with a few basic questions. Some examples:
+
+- What kind of data is here? What are the variables? How many observations?
+- Who collected these data? How? Why?
+- How accurate are these data?
+- How complete are these data? Are there too many missing values?
+- Are there anomalies that I need to be aware of?
+- Do I have the legal rights to use these data? Under what conditions?
+
+[Here's some background information](http://insideairbnb.com/behind.html) that may answer some of these questions.
+
+Let's take a look at the data. Open the csv file in Excel. Browse around a bit. Any observations or questions?
+
+*Discuss: Can you explain what each column is about?*
+
+*Discuss: Are there any data that you'd like to have but not there?*
+
+*Discuss: What's the first thing you'd like to find out from these data?*
+
+*Discuss: What do you think about the quality of the data? Why?*
+
+
+
+
+# The context
+
+Data analysis happens within a larger context. Usually there's an overarching business, policy, or scientific question that one would like to answer. Often that question is not very clear. Whatever the case, you need to approach the data with curiosity about the larger context.  
+
+The more you understand the context of the data, the better will be your questions and hypotheses guiding your analysis.
+
+For our dataset, we should have a good understanding of the business model of Airbnb as well as the economy and geography of NYC. 
+
+*Discuss: Is there anything else we need to know about?*
+
+## Airbnb
+
+[How Airbnb works](https://www.wikiwand.com/en/Airbnb#/How_it_works)
+
+[Example airbnb listing](https://www.airbnb.com/rooms/2168594?s=frffIXWS)
+
+## New York City
+
+The map shows the relative size and location of the five boroughs. 
+![img](https://i.imgur.com/se7fTYT.png)
+
+# Analysis
+
+## Install and load libraries.
+
+We'll first install a few libraries that we'll need at different stages of the analysis. 
+
+```{r}
+# For loading data
+install.packages("readr")
+# For data manipulation (we'll spend most time with this one)
+install.packages("dplyr")
+# For visualization
+install.packages("ggplot2")
+# For string manipulation
+install.packages("stringr")
+# To work with date and time
+install.packages("lubridate")
+```
+
+And then we load the libraries for our current R session. After these libraries are successfully loaded, all the functions in these libraries will be available for our use.
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(stringr)
+library(lubridate)
+```
+
+## Load and prepare data
+
+We'll use the function `read_csv`, which comes from the library `readr`, to load data from file and convert the data into a dataframe. A dataframe is a tabular data structure, with columns as variables and rows as observations. In this case, exactly as it is in the csv file.
+
+*Discuss: What'a csv file? What other formats are out there for storing data? How can we load data from an unfamiliar format?*
+
+```{r}
+df <- read_csv("airbnb_newyork.csv")
+```
+
+First thing to check if the data have been successully loaded and assigned to the variable (here `df`). We don't see any error — which is a good sign. We can also see the variable `df` in the environment pane (usually to the right of this code editor pane – click on "Environment" if hidden).
+
+Next thing to check is whether read_csv was able to correctly infer the data type of each variable.
+
+The function `glimpse` will give us a better glimpse.
+```{r}
+glimpse(df)
+```
+
+What you see within the angular brackets `<...>` next to each column name is the data type of that variable. 
+
+But what are data types? And, why are they important? What exactly is a variable in programming? What is a function?
+
+Let's take a detour.
+
+# Detour: variables, data types, and functions in R
+
+## Variables (programming)
+
+In programming, a variable stores some value (not to be confused with what we call variable in statistics). Our code can then reference the name of the variable for different purposes. 
+
+We use the symbol `<-` (less than sign followed by hyphen) to assign value to a variable name. For example, in the code below, `foo` and `bar` are variable names. We assigned the values `43` and `"kitten"` to `foo` and `bar` respectively. You can read them as `foo` gets `43` and `bar` gets `"kitten"`.
+
+```{r}
+foo <- 43
+bar <- "kitten"
+print(foo * 10)
+```
+
+Important: I've been using the word *variable* to mean two different things. A variable in programming is what I described above. A variable in statistics is an attribute of something, whatever the data is about. For example, if the data is about people, some variables could be age, sex, income, address. The names of the columns of a dataframe are variables in the statistical sense. Usually, the context would clarify which meaning is intended.
+
+Tip: Give short descriptive names to your variables. This will make the code easy to follow.
+
+*Exercise: a room is 11 yards long and 7.5 yards wide. Assign these values to `width` and `length` variables and then calculate the `area` of the room. You can, of course, give different names to these variables if you wish.*
+
+```{r}
+
+```
+
+## Data types
+
+To understand how R stores and handles information, we need to know a little about data types.
+
+But, first, vector: one of the key concepts in R. Think of a vector as simply a sequence of data. For example, a column in a data table is a vector. This is how you create a vector: `c(element1, element2, element3, ...)`
+
+```{r}
+vec <- c(3, 5, 10, 20)
+print(vec)
+```
+
+A vector can contain four main types of data:
+
+- Integer: such as 2, 543, 90.
+- Double: numbers other than integers, such as 4.56, 1/33. Doubles are always approximations.
+- Character: a sequence of letters, numbers, punctuations, etc., such as "rainbow", "34265". Character data are always written within quotes, either single or double (we'll always use double for consistency).
+- Logical: data that can take on one of only two values — TRUE or FALSE.
+
+*Discuss: Why is "34265" of character type? What is a real world example of this kind of data?*
+
+There are two other important ways to store data: 
+- `factor`, for categorical variables (here "variable" in statistical sense). A categorical variable is one that can take on a limited fixed number of values.
+- `date-time` or just `date`
+
+
+## Functions
+
+The concept of a function is exactly the same as in Excel. You give some values (called parameters) to a function. The function does something with the values and returns a new value.
+
+Here's a simple function that we named `add10`. All it does is adds 10 to any number given to it.
+
+```{r}
+add10 <-  function(num){
+  new_value <-  num + 10
+  return (new_value)
+}
+```
+
+And, then, we can use this function whenever we need to add 10 to a number (Of course, we won't. There are easier ways to add a number).
+
+```{r}
+# Add 10 to 35
+add10(35)
+```
+
+Today, we won't write any function, Rather, we'll use functions written by others. Here's an example: the `mean` function, which comes preloaded in R.
+
+```{r}
+# First let's create a vector
+vec2 <- c(23, 53, 11, 34, 87, 100, 5, 12, 66, 9, 87, 110, 20, 33, 54, 43, 76)
+# Let's calculate the mean of the vector
+calculated_mean <- mean(vec2)
+# Then output it with some text description
+message("The mean of the vector vec2 is ", mean(calculated_mean))
+```
+*Exercise: calculate the sum, median, and standard deviation (hint: sd) of the vector vec2.
+
+```{r}
+
+```
+
+Now that we understand data types, let's load some new data.
+
+*Exercise: You'll see there's another data file in the folder: "us_babynames.csv". Load the data from this file to a dataframe (hint: read_csv). Assign the dataframe to a variable named `df_babynames`. We'll come back to this dataframe later.*
+
+```{r}
+
+```
+
+*Exercise: Now take a look at the dataframe's data types. (hint: glimpse)*
+
+```{r}
+
+```
+
+# Back to analysis
+
+## Fix data types
+
+Let's take another look at the data types of our dataframe.
+
+```{r}
+glimpse(df)
+```
+
+
+Some of the data types don't look right. Let's correct them.
+
+*Discuss: why is it important to have the correct data type?*
+
+But, first, let's learn how to reference a column in a dataframe: the name of the dataframe followed by `$` and then the column name. For example: `df$cancellation_policy` or `df_babynames$Gender`.
+
+To change data type, we apply the relevant function, such `as.character` or `as.factor`, to a column and then assign the output of the function (values with changed data type) to the same column. 
+
+```{r}
+df$host_id <- as.character(df$host_id)
+df$host_response_rate <- as.double(df$host_response_rate)
+df$property_type <- as.factor(df$property_type)
+df$host_since <- mdy(df$host_since)
+```
+
+*Exercise: Change the data type of any other variables you think necessary.*
+```{r}
+
+```
+
+## Missing values
+
+Some values will almost inevitably be missing in a medium to large dataset. There are a few options for dealing with missing values.
+
+- We can drop all rows that have one or more missing values.
+- Drop rows that have missing values in particular columns.
+- Replace the missing values with some other value.
+- Do nothing, but do remember to take care of them when running arithmetic operations. (explained later)
+
+In our case, we'll go with the last option.
+
+*Discuss: Is the last option the best for our dataset? What would be a better alternative?*
+
+## Data manipluation
+
+dplyr functions discussed in this section
+
+
+----
+
+Here are some excellent resources if you want to keep learning R:
+
+- http://tryr.codeschool.com
+- http://r4ds.had.co.nz/
+- http://swirlstats.com/
+
+
