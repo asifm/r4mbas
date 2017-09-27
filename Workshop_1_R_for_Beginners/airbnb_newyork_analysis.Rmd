@@ -56,8 +56,7 @@ Feel free to add your commentary and code anywhere in this document. You can alw
 
 To write your own code chunk, look for the **insert** button above and then select **R**. Or, use the keyboard shortcut **CTRL + ALT + I**. 
 
-*Exercise: Place the cursor below and create a placeholder for writing code. Now write some code and run the code. For example, find the result of `3543 / 562`.*
-
+*Exercise: Place the cursor below and create a container for writing code. Now write some code and run it. For example, find the result of `3543 / 562`.*
 
 
 
@@ -98,9 +97,11 @@ The more you understand the context of the data, the better will be your questio
 
 For our dataset, we should have a good understanding of the business model of Airbnb as well as the economy and geography of NYC. 
 
-*Discuss: Is there anything else we need to know about?*
+*Discuss: Is there anything else we should know about?*
 
 ## Airbnb
+
+*Discuss: How much do we need to know about Airbnb and its business? Is my personal experience with Airbnb enough? What if I don't have any personal experience?*
 
 [How Airbnb works](https://www.wikiwand.com/en/Airbnb#/How_it_works)
 
@@ -108,12 +109,19 @@ For our dataset, we should have a good understanding of the business model of Ai
 
 ## New York City
 
-The map shows the relative size and location of the five boroughs. 
+We can start with a map of the city.
+
 ![img](https://i.imgur.com/se7fTYT.png)
+
+The map shows the relative size and location of the five boroughs of NYC. 
+
+*Discuss: What else do we know about these boroughs? What about the neighborhoods within the boroughs?*
+
+
 
 # Analysis
 
-## Install and load libraries.
+## Install and load libraries
 
 We'll first install a few libraries that we'll need at different stages of the analysis. 
 
