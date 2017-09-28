@@ -638,6 +638,7 @@ df %>%
   group_by(borough) %>% 
   summarize(mean(price), median(price))
 ```
+
 *Exercise: Return the same dataframe but sorted by mean price.*
 ```{r}
 
@@ -648,11 +649,11 @@ Example: Which are the top 10 neighborhoods by total number of listings?
 df %>% 
   group_by(neighborhood) %>% 
   summarize(count = n()) %>% 
-  arrange(desc(count)) %>% 
-  top_n(10)
+  top_n(10) %>% 
+  arrange(desc(count))
 ```
 
-We introduce a new function `top_n` here, which is self-explanatory.
+We introduce a new function `top_n` here, which returns top n rows (or bottom n rows, when n is negative) ordered by some variable. In the code chunk above, if we had `top_n(-10)`, we would've got the bottom 10 rows.
 
 Example: Which are the top two neighborhoods in each of the boroughs by number of listings?
 ```{r}
@@ -733,7 +734,7 @@ df %>%
 Example: Which neighborhoods have the highest number Of listings that have review_scores_value less than 5.
 ```{r}
 df %>% 
-  filter(review_scores_value <= 2) %>% 
+  filter(review_scores_value < 5) %>% 
   group_by(borough, neighborhood) %>% 
   summarize(count = n()) %>% 
   ungroup() %>% 
