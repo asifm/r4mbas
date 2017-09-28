@@ -1,13 +1,15 @@
 ---
 title: "A Survey of New York City's Airbnb Listings"
-subtitle: 'R for beginners: a data analysis workshop'
 author: "Asif Mehedi"
 date: '`r Sys.Date()`'
 output:
+  word_document:
+    toc: yes
   html_notebook:
-    toc: true
-    theme: flatly
     highlight: haddock
+    theme: flatly
+    toc: yes
+subtitle: 'R for beginners: a data analysis workshop'
 ---
 
 # Goals
@@ -18,7 +20,7 @@ output:
 
 we'll do these by taking a close look at some interesting data: Airbnb listings for New York City in May 2017.
 
-It's Okay if you can't start using these techniques right away after the workshop. To be comfortable with a tool like R takes some time and practice. But we do hope that your exposure today to these tools and techniques will open your eyes about possibilities and motivate you to keep learning.
+It's okay if you can't start using these techniques right away after the workshop. To be comfortable with a tool like R takes some time and practice. But we do hope that your exposure today to these tools and techniques will open your eyes about possibilities and motivate you to keep learning.
 
 # RStudio
 
@@ -40,7 +42,7 @@ What you're reading is the commentary and what you see below is the container fo
 # The code goes here
 ```
 
-To run a code chunk, click on the little triangle at the right edge of the code chunk. Or, use the keyboard shortcut **CTRL + SHIFT + ENTER**.
+To run a code chunk, click on the little triangle at the right edge of the code chunk. Or, use the keyboard shortcut **CTRL + SHIFT + ENTER** (Windows) or **CMD + SHIFT + ENTER** (Mac).
 
 *Exercise: Run the chunk below and see what happens.*
 ```{r}
@@ -54,7 +56,7 @@ As you see, the output appears under the code. This way you can immediately see 
 
 Feel free to add your commentary and code anywhere in this document. You can always download the unmodified version from [here](https://github.com/asifm/tech-workshops/tree/master/Datasets). 
 
-To write your own code chunk, look for the **insert** button above and then select **R**. Or, use the keyboard shortcut **CTRL + ALT + I**. 
+To write your own code chunk, look for the **insert** button above and then select **R**. Or, use the keyboard shortcut **CTRL + ALT + I** (Windows) or **CMD + OPTION + I** (Mac). 
 
 *Exercise: Place the cursor below and create a container for writing code. Now write some code and run it. For example, find the result of `3543 / 562`.*
 
@@ -123,7 +125,7 @@ The map shows the relative size and location of the five boroughs of NYC.
 
 ## Install and load libraries
 
-We'll first install a few libraries that we'll need at different stages of the analysis. 
+We'll first install a few libraries that we'll need at different stages of the analysis. This may take a while.
 
 ```{r}
 # For loading data
@@ -250,7 +252,7 @@ vec2 <- c(23, 53, 11, 34, 87, 100, 5, 12, 66, 9, 87, 110, 20, 33, 54, 43, 76)
 # Let's calculate the mean of the vector
 calculated_mean <- mean(vec2)
 # Then output it with some text description
-message("The mean of the vector vec2 is ", mean(calculated_mean))
+message("The mean of the vector vec2 is ", calculated_mean)
 ```
 *Exercise: calculate the sum, median, and standard deviation (hint: sd) of the vector vec2.
 
@@ -297,6 +299,7 @@ df$host_response_rate <- as.double(df$host_response_rate)
 df$property_type <- as.factor(df$property_type)
 df$host_since <- mdy(df$host_since)
 ```
+Side note: The last function `mdy` is different from others. Normally, working with date-time in R (and in prgramming in general) is not an easy task. The lubridate library, which we loaded earlier, makes the job much easier. We'll not go into the details of date-times. What we did here with `mdy` is convert character data into date data. We used `mdy` because the character data were in the form month-date-year. If they were in the form ,for example, year-month-date, we would've used the function `ymd`.
 
 *Exercise: Change the data type of any other variables you think necessary.*
 ```{r}
@@ -305,7 +308,15 @@ df$host_since <- mdy(df$host_since)
 
 ## Missing values
 
-Some values will almost inevitably be missing in a medium to large dataset. There are a few options for dealing with missing values.
+Some values will almost inevitably be missing in a medium to large dataset. Let's inspect our data for missing values using the function `summary`, which will give us plenty of other important information.
+
+```{r}
+summary(df)
+
+```
+
+
+There are a few options for dealing with missing values.
 
 - We can drop all rows that have one or more missing values.
 - Drop rows that have missing values in particular columns.
@@ -318,7 +329,7 @@ In our case, we'll go with the last option.
 
 ## Data manipluation and exploration
 
-Finally, we're ready to dive into the data. We'll use six functions — think of them as six verbs — to slice and dice the data in all kinds of ways. These functions come from the dplyr library. These are:
+Finally, we're ready to dive into the data. We'll use six functions — think of them as six verbs — to slice and dice the data in all kinds of ways. These functions come from the dplyr library. They are:
 
 - filter
 - select
@@ -327,7 +338,7 @@ Finally, we're ready to dive into the data. We'll use six functions — think of
 - summarize
 - group_by
 
-We'll first learn these functions one by one and later we'll learn how to combine them for powerful analysis.
+We'll first learn these functions one by one and later we'll learn how to combine them for powerful analysis. 
 
 For each of these functions, we provide the name of the dataframe as the first parameter. The subsequent parameters inform what the function is to do with the dataframe.
 
@@ -337,7 +348,7 @@ You use `filter`, when you want a subset of the rows based on one or more condit
 
 The syntax is: `filter(name_of_dataframe, condition1, condition2, ...)`
 
-Use these *logical operators* to create conditions:
+Use these *logical operators* to create the conditions:
   
   <	      less than
   <=	    less than or equal to
@@ -397,18 +408,278 @@ Our second verb is `select`, which is used to return a subset of the columns.
 
 The syntax is: `select(name_of_dataframe, name_of_column1, name_of_column2, ...)`
 
-Example: Return a dataframe with only the *beds* column
+There are some variations to this syntax, which come in handy in certain situations.
+
+- If you want all columns except one: `select(name_of_dataframe, -column_to_exclude)`
+- If you want all columns except two: `select(name_of_dataframe, -c(column_to_exlude1, column_to_exclue2))`
+- If you want the third through eigth columns: `select(name_of_dataframe, 3:8)`
+
+Example: Return a dataframe with only the listing_url column
 ```{r}
-select(df, beds)
+select(df, listing_url)
 ```
 
 Example: Return a dataframe with columns host_response_time, cancellation_policy, and neighbourhood
 ```{r}
 select(df, host_response_time, cancellation_policy, neighbourhood)
 ```
+Example: Return a dataframe with second through fourth columns
+```{r}
+select(df, 2:4)
+```
+
+*Exercise: Return a dataframe with property_type, room_type, and zip_code columns.*
+```{r}
+
+```
 
 
-----
+*Exercise: Return a dataframe with the last 23 columns (sixth through 28th)*
+```{r}
+
+```
+
+*Exercise: What would be another way of getting the same dataframe?*
+```{r}
+
+```
+
+
+## Detour: piping
+
+Before I introduce the third verb, let's take another detour. 
+
+You can't accomplish a lot with `filter` and `select` in isolation. Let's combine them. 
+
+Here, we're creating a new dataframe `df_expensive` by using `filter` and then we're selecting some columns of interest from that dataframe.
+```{r}
+df_expensive <- filter(df, price > 8000)
+select(df_expensive, price, neighbourhood, listing_url)
+```
+*Discuss: More than $8000 per night? What's going on here? How can we find out more? What should we do we this kind of outliers?*
+
+The above code could be written more succinctly by using pipe `%>%`.
+```{r}
+df %>% 
+  filter(price > 8000) %>% 
+  select(price, neighbourhood, listing_url)
+```
+Let's try to understand how the pipe works.
+
+`filter` and `select` both receive a dataframe as their first parameter (this is true for the other four main verbs as well.) Also, you may have noticed that `filter` and `select` return a dataframe (again, it's true for the others as well). Thanks to this, we can use the pipe to string together several verbs to form a complex query.
+
+```{r}
+filter(df, price > 8000)
+```
+is the same as
+```{r}
+df %>% filter(price > 8000)
+```
+
+Also,
+```{r}
+select(df, price, review_scores_rating, listing_url)
+```
+is the same as
+```{r}
+df %>% select(price, review_scores_rating, listing_url)
+```
+
+The left side of the pipe is used as the first parameter of the function on the right side of the pipe. 
+
+This is how `filter`, `select`, and such functions receive a dataframe, does something to it, returns the modified dataframe and passes it on to the next function.
+
+Here's again the piped expression. Make sure you understand what's going on.
+```{r}
+df %>% 
+  filter(price > 8000) %>% 
+  select(price, review_scores_rating, listing_url)
+```
+
+### arrange
+
+`arrange` is our third verb. (Note that I'm using verb and function interchangeably.) `arrange` sorts a dataframe based on the values of one or more columns.
+
+Example: Get the same dataframe as the last code chunk. Sort it by price.
+```{r}
+df %>% 
+  filter(price > 8000) %>% 
+  select(price, review_scores_rating, listing_url) %>% 
+  arrange(price)
+```
+
+Example: The same dataframe, but now in descending order of price.
+```{r}
+df %>% 
+  filter(price > 8000) %>% 
+  select(price, review_scores_rating, listing_url) %>% 
+  arrange(desc(price))
+```
+Example: You can add more columns to `arrange`. Now when price is the same, the order will be based on neighbourhood.
+```{r}
+df %>% 
+  filter(price > 8000) %>% 
+  select(price, neighbourhood, listing_url) %>% 
+  arrange(desc(price), neighbourhood)
+```
+*Exercise: Return the whole dataframe `df`, in descending order of number of bedrooms and where number of bedrooms are equal, descending order of review_scores_rating*
+```{r}
+
+```
+
+### mutate
+
+`mutate` creates a new column by modifying one or more existing columns. It's better explained by examples.
+
+Example:
+```{r}
+mutate(df, price_per_person = price / accommodates)
+```
+
+
+*Exercise: Create a new review_rating column, which is an average of review_scores_accuracy and review_scores_value.*
+
+```{r}
+
+```
+
+### summarize (or summarise)
+
+`summarize`, as you'd expect, gives some kind of summary (such as mean, median, min, max) of the values of a given column.
+
+Example: What is the total number of people that can stay in NYC Airbnbs?
+```{r}
+summarize(df, total_accommodates = sum(accommodates))
+```
+Here, total_accommodates is a name I've given to the summary number.
+
+The common summary functions are:
+- sum
+- n (count)
+- mean
+- median
+- sd (standard deviation)
+- var (variance)
+- range
+- min
+- max
+
+Note: The function `n` doesn't need a parameter, because it just counts the number of rows in the dataframe. This would become more clear in the examples.
+
+We can also write our own function and use here. But that is a more advanced topic.
+
+Example: What is the mean rating for accuracy?
+```{r}
+summarize(df, mean_accuracy = mean(review_scores_accuracy))
+```
+
+This did not give us what we expected. This is because any arithmetic operation involving `NA` (that, not available or missing values) results in `NA`. 
+```{r}
+5 + NA
+```
+Or,
+```{r}
+NA / 33
+```
+
+The review_scores_accuracy had several `NA`s. The correct way of doing this would be:
+```{r}
+summarize(df, mean_accuracy = mean(review_scores_accuracy, na.rm = TRUE))
+```
+`na.rm = TRUE` means "remove all NAs before performing arithmetic operations."
+
+When we summed the accommodates column earlier, we didn't add `na.rm = TRUE` because that column didn't have any NAs. 
+
+Example: We can have multiple summaries at the same time.
+```{r}
+summarize(df, min_score_value = min(review_scores_value, na.rm = TRUE), 
+          max_score_value = max(review_scores_value, na.rm = TRUE))
+```
+
+Example: What's the total number of listings in this dataset?
+```{r}
+df %>% 
+  summarize(count = n())
+```
+
+
+*Exercise: The host who's been with Airbnb NYC for the longest time started on which date?*
+```{r}
+
+```
+*Exercise: Find the standard deviation and mean of the price variable.*
+```{r}
+
+```
+
+*Exercise: Count the number of unique zip_codes in the data. Hint `distinct` and `n`.*
+```{r}
+
+```
+
+*Exercise: How many listings have perfect 100 for review_scores_rating (which is the overall rating shown as stars on the listing's webpage)?*
+```{r}
+
+```
+
+*Exercise: How many listings have perfect 100 for review_scores_rating and price less than 50? *
+```{r}
+
+```
+
+
+### group-by
+
+`group-by` is one of the most useful functions. It divides the data into different groups and then `summarize` summarizes each of the group. This way we can compre the different groups on various attributes.
+
+Example: What's the mean and median price in each of the five boroughs?
+
+```{r}
+df %>% 
+  group_by(borough) %>% 
+  summarize(mean(price), median(price))
+```
+*Exercise: Return the same dataframe but sorted by mean price.*
+```{r}
+
+```
+
+Example: Which are the top 10 neighbourhoods by total number of listings?
+```{r}
+df %>% 
+  group_by(neighbourhood) %>% 
+  summarize(count = n()) %>% 
+  arrange(desc(count)) %>% 
+  top_n(10)
+```
+
+We introduce a new function `top_n` here, which is self-explanatory.
+
+*Exercise: Do the same as above but only for listings where price is more than 500.*
+```{r}
+
+```
+
+Example: In Manhattan, which neighbourhood has the highest mean price?*
+```{r}
+df %>%
+  filter(borough == "Manhattan") %>% 
+  group_by(neighbourhood) %>% 
+  summarize(mean_price = mean(price)) %>% 
+  arrange(desc(mean_price))
+```
+
+*Exercise: In Bronx and Queens, what's the mean price for different property_type?*
+```{r}
+
+```
+
+*Exercise: Which combination of property_type and room_type has the highest median price?*
+```{r}
+
+```
+
+
 
 Here are some excellent resources if you want to keep learning R:
 
