@@ -9,7 +9,7 @@ output:
     highlight: haddock
     theme: flatly
     toc: yes
-subtitle: 'R for beginners: a data analysis workshop'
+subtitle: 'R for beginners: a data exploration workshop'
 ---
 
 # Goals
@@ -24,7 +24,7 @@ It's okay if you can't start using these techniques right away after the worksho
 
 # RStudio
 
-RStudio is a free program that makes writing R code much more enjoyable and efficient.
+RStudio is a free program that makes writing R code much more enjoyable and efficient. Strictly speaking, you don't need it to write R code, but I highly recommend RStudio.
 
 It has four main panes. This one is the code editor (also known as script editor and source editor). This is where we'll spend most of our time. We'll say more about the other panes when the time comes. 
 
@@ -129,15 +129,13 @@ We'll first install a few libraries that we'll need at different stages of the a
 
 ```{r}
 # For loading data
-install.packages("readr")
-# For data manipulation (we'll spend most time with this one)
-install.packages("dplyr")
-# For visualization
-install.packages("ggplot2")
-# For string manipulation
-install.packages("stringr")
-# To work with date and time
-install.packages("lubridate")
+# install.packages("readr")
+# # For data manipulation (we'll spend most time with this one)
+# install.packages("dplyr")
+# # For visualization
+# install.packages("ggplot2")
+# # To work with date and time
+# install.packages("lubridate")
 ```
 
 And then we load the libraries for our current R session. After these libraries are successfully loaded, all the functions in these libraries will be available for our use.
@@ -146,7 +144,6 @@ And then we load the libraries for our current R session. After these libraries 
 library(readr)
 library(dplyr)
 library(ggplot2)
-library(stringr)
 library(lubridate)
 ```
 
@@ -160,7 +157,7 @@ We'll use the function `read_csv`, which comes from the library `readr`, to load
 df <- read_csv("airbnb_newyork.csv")
 ```
 
-First thing to check if the data have been successully loaded and assigned to the variable (here `df`). We don't see any error — which is a good sign. We can also see the variable `df` in the environment pane (usually to the right of this code editor pane – click on "Environment" if hidden).
+First thing to check if the data have been successfully loaded and assigned to the variable (here `df`). We don't see any error — which is a good sign. We can also see the variable `df` in the environment pane (usually to the right of this code editor pane – click on "Environment" if hidden).
 
 Next thing to check is whether read_csv was able to correctly infer the data type of each variable.
 
@@ -214,7 +211,7 @@ A vector can contain four main types of data:
 
 - Integer: such as 2, 543, 90.
 - Double: numbers other than integers, such as 4.56, 1/33. Doubles are always approximations.
-- Character: a sequence of letters, numbers, punctuations, etc., such as "rainbow", "34265". Character data are always written within quotes, either single or double (we'll always use double for consistency).
+- Character: a sequence of letters, numbers, punctuation, etc., such as "rainbow", "34265". Character data are always written within quotes, either single or double (we'll always use double for consistency).
 - Logical: data that can take on one of only two values — TRUE or FALSE.
 
 *Discuss: Why is "34265" of character type? What is a real world example of this kind of data?*
@@ -269,7 +266,6 @@ Now that we understand data types, let's load some new data.
 ```
 
 *Exercise: Now take a look at the dataframe's data types. (hint: glimpse)*
-
 ```{r}
 
 ```
@@ -302,7 +298,7 @@ df$host_since <- mdy(df$host_since)
 
 *Discuss: What is the rationale for each of these changes?*
 
-Side note: The last function `mdy` is different from the others. Normally, working with date-time in R (and in prgramming in general) is not simple. The lubridate library, which we loaded earlier, makes the job much easier. We'll not go into the details of date-times. What we did here with `mdy` is convert character data into date data. We used `mdy` because the character data were in the form month-date-year. If they were in the form ,for example, year-month-date, we would've used the function `ymd`.
+Side note: The last function `mdy` is different from the others. Normally, working with date-time in R (and in programming in general) is not simple. The lubridate library, which we loaded earlier, makes the job much easier. We'll not go into the details of date-times. What we did here with `mdy` is convert character data into date data. We used `mdy` because the character data were in the form month-date-year. If they were in the form ,for example, year-month-date, we would've used the function `ymd`.
 
 *Exercise: Change the data type of any other variables you think necessary.*
 ```{r}
@@ -415,7 +411,7 @@ There are some variations to this syntax, which come in handy in certain situati
 
 - If you want all columns except one: `select(name_of_dataframe, -column_to_exclude)`
 - If you want all columns except two: `select(name_of_dataframe, -c(column_to_exlude1, column_to_exclue2))`
-- If you want the third through eigth columns: `select(name_of_dataframe, 3:8)`
+- If you want the third through eighth columns: `select(name_of_dataframe, 3:8)`
 
 Example: Return a dataframe with only the listing_url column
 ```{r}
@@ -633,7 +629,7 @@ df %>%
 
 ### group-by
 
-`group-by` is one of the most useful functions. It divides the data into different groups and then `summarize` summarizes each of the group. This way we can compre the different groups on various attributes.
+`group-by` is one of the most useful functions. It divides the data into different groups and then `summarize` summarizes each of the group. This way we can compare the different groups on various attributes.
 
 Example: What's the mean and median price in each of the five boroughs?
 
@@ -700,9 +696,55 @@ df %>%
 
 *Exercise: Considering only the Brooklyn listings that have review_scores_value 9 or 10, which neighborhood, out of those neighborhoods with at least 100 listings, has the lowest median price? *
 ```{r}
-df %>% 
+
   
 ```
+
+## Visual exploration
+
+We're going to use ggplot2 library, which we loaded earlier, for some visual exploration of the data. Actually, this is how we should have begun our data exploration. We couldn't do this, because we needed to learn the six verbs first to get the full benefit of ggplot2.
+
+Unfortunately, we won't have time today to learn ggplot2. It may be possible to organize a separate session later on visualization in R.
+
+Example: What's the distribution of price?
+```{r}
+ggplot(df) + geom_histogram(aes(price))
+```
+
+*Exercise: What's the problem with this histogram? How can we solve this?*
+```{r}
+
+```
+
+Example: Compare price distribution of different boroughs.
+```{r}
+df %>% 
+  filter(price < 500) %>% 
+  ggplot() + geom_histogram(aes(x = price, fill = borough))
+```
+
+Example: Do the same, but with boxplots
+```{r}
+df %>% 
+  filter(price < 500) %>% 
+  ggplot() + geom_boxplot(aes(x = borough, y = price))
+```
+
+Example: Which neighborhoods have the highest number Of listings that have review_scores_value less than 5.
+```{r}
+df %>% 
+  filter(review_scores_value <= 2) %>% 
+  group_by(borough, neighborhood) %>% 
+  summarize(count = n()) %>% 
+  ungroup() %>% 
+  top_n(5) %>% 
+  ggplot() + geom_col(aes(x = reorder(neighborhood, count), y = count)) +
+  coord_flip()
+
+```
+
+
+
 
 
 ----------------------
