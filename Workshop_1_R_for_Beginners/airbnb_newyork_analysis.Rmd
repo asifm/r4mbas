@@ -103,11 +103,11 @@ For our dataset, we should have a good understanding of the business model of Ai
 
 ## Airbnb
 
-*Discuss: How much do we need to know about Airbnb and its business? Is my personal experience with Airbnb enough? What if I don't have any personal experience?*
+*Discuss: How much do I need to know about Airbnb and its business? Is my personal experience with Airbnb enough? What if I don't have any personal experience?*
 
 [How Airbnb works](https://www.wikiwand.com/en/Airbnb#/How_it_works)
 
-[Example airbnb listing](https://www.airbnb.com/rooms/2168594?s=frffIXWS)
+[Example of an Airbnb listing](https://www.airbnb.com/rooms/2168594?s=frffIXWS)
 
 ## New York City
 
@@ -169,7 +169,7 @@ The function `glimpse` will give us a better glimpse.
 glimpse(df)
 ```
 
-What you see within the angular brackets `<...>` next to each column name is the data type of that variable. 
+What you see within the angular brackets `<...>` next to each column name is the data type of that column. 
 
 But what are data types? And, why are they important? What exactly is a variable in programming? What is a function?
 
@@ -299,7 +299,10 @@ df$host_response_rate <- as.double(df$host_response_rate)
 df$property_type <- as.factor(df$property_type)
 df$host_since <- mdy(df$host_since)
 ```
-Side note: The last function `mdy` is different from others. Normally, working with date-time in R (and in prgramming in general) is not an easy task. The lubridate library, which we loaded earlier, makes the job much easier. We'll not go into the details of date-times. What we did here with `mdy` is convert character data into date data. We used `mdy` because the character data were in the form month-date-year. If they were in the form ,for example, year-month-date, we would've used the function `ymd`.
+
+*Discuss: What is the rationale for each of these changes?*
+
+Side note: The last function `mdy` is different from the others. Normally, working with date-time in R (and in prgramming in general) is not simple. The lubridate library, which we loaded earlier, makes the job much easier. We'll not go into the details of date-times. What we did here with `mdy` is convert character data into date data. We used `mdy` because the character data were in the form month-date-year. If they were in the form ,for example, year-month-date, we would've used the function `ymd`.
 
 *Exercise: Change the data type of any other variables you think necessary.*
 ```{r}
@@ -362,9 +365,9 @@ Use these *logical operators* to create the conditions:
 
 
 
-Example: Return a dataframe with only those rows where the neighbourhood is Chelsea.
+Example: Return a dataframe with only those rows where the neighborhood is Chelsea.
 ```{r}
-filter(df, neighbourhood == "Chelsea")
+filter(df, neighborhood == "Chelsea")
 ```
 
 Example: Return a dataframe with only those rows where the price is more than 5000.
@@ -419,9 +422,9 @@ Example: Return a dataframe with only the listing_url column
 select(df, listing_url)
 ```
 
-Example: Return a dataframe with columns host_response_time, cancellation_policy, and neighbourhood
+Example: Return a dataframe with columns host_response_time, cancellation_policy, and neighborhood
 ```{r}
-select(df, host_response_time, cancellation_policy, neighbourhood)
+select(df, host_response_time, cancellation_policy, neighborhood)
 ```
 Example: Return a dataframe with second through fourth columns
 ```{r}
@@ -454,7 +457,7 @@ You can't accomplish a lot with `filter` and `select` in isolation. Let's combin
 Here, we're creating a new dataframe `df_expensive` by using `filter` and then we're selecting some columns of interest from that dataframe.
 ```{r}
 df_expensive <- filter(df, price > 8000)
-select(df_expensive, price, neighbourhood, listing_url)
+select(df_expensive, price, neighborhood, listing_url)
 ```
 *Discuss: More than $8000 per night? What's going on here? How can we find out more? What should we do we this kind of outliers?*
 
@@ -462,7 +465,7 @@ The above code could be written more succinctly by using pipe `%>%`.
 ```{r}
 df %>% 
   filter(price > 8000) %>% 
-  select(price, neighbourhood, listing_url)
+  select(price, neighborhood, listing_url)
 ```
 Let's try to understand how the pipe works.
 
@@ -515,12 +518,12 @@ df %>%
   select(price, review_scores_rating, listing_url) %>% 
   arrange(desc(price))
 ```
-Example: You can add more columns to `arrange`. Now when price is the same, the order will be based on neighbourhood.
+Example: You can add more columns to `arrange`. Now when price is the same, the order will be based on neighborhood.
 ```{r}
 df %>% 
   filter(price > 8000) %>% 
-  select(price, neighbourhood, listing_url) %>% 
-  arrange(desc(price), neighbourhood)
+  select(price, neighborhood, listing_url) %>% 
+  arrange(desc(price), neighborhood)
 ```
 *Exercise: Return the whole dataframe `df`, in descending order of number of bedrooms and where number of bedrooms are equal, descending order of review_scores_rating*
 ```{r}
@@ -644,10 +647,10 @@ df %>%
 
 ```
 
-Example: Which are the top 10 neighbourhoods by total number of listings?
+Example: Which are the top 10 neighborhoods by total number of listings?
 ```{r}
 df %>% 
-  group_by(neighbourhood) %>% 
+  group_by(neighborhood) %>% 
   summarize(count = n()) %>% 
   arrange(desc(count)) %>% 
   top_n(10)
@@ -655,16 +658,26 @@ df %>%
 
 We introduce a new function `top_n` here, which is self-explanatory.
 
-*Exercise: Do the same as above but only for listings where price is more than 500.*
+Example: Which are the top two neighborhoods in each of the boroughs by number of listings?
+```{r}
+df %>% 
+  group_by(borough, neighborhood) %>% 
+  summarize(count = n()) %>% 
+  top_n(2) %>% 
+  arrange(desc(count))
+```
+
+
+*Exercise: Do the same as above but only for listings where price is more than 500 and property_type is Apartment.*
 ```{r}
 
 ```
 
-Example: In Manhattan, which neighbourhood has the highest mean price?*
+Example: In Manhattan, which neighborhood has the highest mean price?*
 ```{r}
 df %>%
   filter(borough == "Manhattan") %>% 
-  group_by(neighbourhood) %>% 
+  group_by(neighborhood) %>% 
   summarize(mean_price = mean(price)) %>% 
   arrange(desc(mean_price))
 ```
@@ -674,12 +687,25 @@ df %>%
 
 ```
 
-*Exercise: Which combination of property_type and room_type has the highest median price?*
+*Exercise: For each boroughs, which neighborhood has the highest variance in price?*
 ```{r}
 
 ```
 
 
+*Exercise: Which combination of property_type and room_type has the highest median price?*
+```{r}
+
+```
+
+*Exercise: Considering only the Brooklyn listings that have review_scores_value 9 or 10, which neighborhood, out of those neighborhoods with at least 100 listings, has the lowest median price? *
+```{r}
+df %>% 
+  
+```
+
+
+----------------------
 
 Here are some excellent resources if you want to keep learning R:
 
