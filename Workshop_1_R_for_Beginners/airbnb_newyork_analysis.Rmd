@@ -350,15 +350,15 @@ The syntax is: `filter(name_of_dataframe, condition1, condition2, ...)`
 Use these *logical operators* to create the conditions:
 
 ```  
-  <	      less than
-  <=	    less than or equal to
-  >	      greater than
-  >=	    greater than or equal to
-  ==	    exactly equal to
-  !=	    not equal to
-  !x	    Not x
-  x | y	  x OR y
-  x & y	  x AND y
+  <       less than
+  <=      less than or equal to
+  >       greater than
+  >=      greater than or equal to
+  ==      exactly equal to
+  !=      not equal to
+  !x      Not x
+  x | y   x OR y
+  x & y   x AND y
 ```
 
 
