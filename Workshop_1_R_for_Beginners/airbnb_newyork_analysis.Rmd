@@ -348,7 +348,8 @@ You use `filter`, when you want a subset of the rows based on one or more condit
 The syntax is: `filter(name_of_dataframe, condition1, condition2, ...)`
 
 Use these *logical operators* to create the conditions:
-  
+
+```  
   <	      less than
   <=	    less than or equal to
   >	      greater than
@@ -358,7 +359,7 @@ Use these *logical operators* to create the conditions:
   !x	    Not x
   x | y	  x OR y
   x & y	  x AND y
-
+```
 
 
 Example: Return a dataframe with only those rows where the neighborhood is Chelsea.
@@ -745,12 +746,9 @@ df %>%
 ```
 
 
-
-
-
 ----------------------
 
-Here are some excellent resources if you want to keep learning R:
+Here are some excellent beginner-friendly resources if you want to keep learning R:
 
 - http://tryr.codeschool.com
 - http://r4ds.had.co.nz/
