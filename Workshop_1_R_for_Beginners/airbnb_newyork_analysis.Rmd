@@ -313,7 +313,7 @@ Some values will almost inevitably be missing in a medium to large dataset. Let'
 summary(df)
 
 ```
-
+*Discuss: Why should we worry about missing values?*
 
 There are a few options for dealing with missing values.
 
@@ -376,7 +376,7 @@ You can combine multiple conditions.
 
 Example: Return a dataframe with rows where borough is Manhattan and price is less than 50.
 ```{r}
-filter(df, borough == "Manhattan", price < 20)
+filter(df, borough == "Manhattan", price < 50)
 ```
 
 Example: Return a dataframe with rows where cancellation_policy is flexible *or* accommodates more than 2.
@@ -390,7 +390,7 @@ filter(df, number_of_reviews != 0)
 ```
 
 
-Note: when multiple conditions are separated by commas are assumed to have *and* logical operator. Using `&` instead would be the same thing. For *or* and other logical operators, we have to explicitly use the appropriate logical operator (e.g. `|` for *or*).
+Note: when multiple conditions are separated by commas, the conditions are assumed to have *and* logical operator between them. Using `&` instead would be the same thing. For *or* and other logical operators, we have to explicitly use the appropriate logical operator (e.g. `|` for *or*).
 
 *Exercise: Return a dataframe with rows where number of bedrooms is not 1 and property_type is House*
 ```{r}
@@ -433,7 +433,6 @@ select(df, 2:4)
 
 ```
 
-
 *Exercise: Return a dataframe with the last 23 columns (sixth through 28th)*
 ```{r}
 
@@ -456,7 +455,7 @@ Here, we're creating a new dataframe `df_expensive` by using `filter` and then w
 df_expensive <- filter(df, price > 8000)
 select(df_expensive, price, neighborhood, listing_url)
 ```
-*Discuss: More than $8000 per night? What's going on here? How can we find out more? What should we do we this kind of outliers?*
+*Discuss: More than $8000 per night? What's going on here? How can we find out more? What should we do with this kind of outliers?*
 
 The above code could be written more succinctly by using pipe `%>%`.
 ```{r}
@@ -487,7 +486,7 @@ df %>% select(price, review_scores_rating, listing_url)
 
 The left side of the pipe is used as the first parameter of the function on the right side of the pipe. 
 
-This is how `filter`, `select`, and such functions receive a dataframe, does something to it, returns the modified dataframe and passes it on to the next function.
+This is how `filter`, `select`, and such functions receives a dataframe, does something to it, returns the modified dataframe and passes it on to the next function.
 
 Here's again the piped expression. Make sure you understand what's going on.
 ```{r}
