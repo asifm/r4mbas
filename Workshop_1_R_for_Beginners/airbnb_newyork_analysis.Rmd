@@ -18,9 +18,9 @@ subtitle: 'R for beginners: a data exploration workshop'
 - Learn the basics of R programming language
 - Learn some powerful techniques for analyzing and exploring a dataset
 
-we'll do these by taking a close look at some interesting data: Airbnb listings for New York City in May 2017.
+We'll do these by taking a close look at some interesting data: Airbnb listings for New York City in May 2017.
 
-It's okay if you can't start using these techniques right away after the workshop. To be comfortable with a tool like R takes some time and practice. But we do hope that your exposure today to these tools and techniques will open your eyes about possibilities and motivate you to keep learning.
+It's okay if you can't start using these techniques right away after the workshop. To be comfortable with a tool like R takes some time and practice. But we do hope that your exposure today to these tools and techniques will open your eyes to possibilities and motivate you to keep learning.
 
 # RStudio
 
@@ -157,7 +157,7 @@ We'll use the function `read_csv`, which comes from the library `readr`, to load
 df <- read_csv("airbnb_newyork.csv")
 ```
 
-First thing to check if the data have been successfully loaded and assigned to the variable (here `df`). We don't see any error — which is a good sign. We can also see the variable `df` in the environment pane (usually to the right of this code editor pane – click on "Environment" if hidden).
+The first thing to check is whether the data have been successfully loaded and assigned to the variable (here `df`). We don't see any error — which is a good sign. We can also see the variable `df` in the environment pane (usually to the right of this code editor pane – click on "Environment" if hidden).
 
 Next thing to check is whether read_csv was able to correctly infer the data type of each variable.
 
@@ -214,7 +214,7 @@ A vector can contain four main types of data:
 - Character: a sequence of letters, numbers, punctuation, etc., such as "rainbow", "34265". Character data are always written within quotes, either single or double (we'll always use double for consistency).
 - Logical: data that can take on one of only two values — TRUE or FALSE.
 
-*Discuss: Why is "34265" of character type? What is a real world example of this kind of data?*
+*Discuss: Why is "34265" of character type? What is a real-world example of this kind of data?*
 
 There are two other important ways to store data: 
 - `factor`, for categorical variables (here "variable" in statistical sense). A categorical variable is one that can take on a limited fixed number of values.
@@ -564,7 +564,7 @@ The common summary functions are:
 - min
 - max
 
-Note: The function `n` doesn't need a parameter, because it just counts the number of rows in the dataframe. This would become more clear in the examples.
+Note: The function `n` doesn't need a parameter because it just counts the number of rows in the dataframe. This would become more clear in the examples.
 
 We can also write our own function and use here. But that is a more advanced topic.
 
@@ -628,9 +628,9 @@ df %>%
 ```
 
 
-### group-by
+### group_by
 
-`group-by` is one of the most useful functions. It divides the data into different groups and then `summarize` summarizes each of the group. This way we can compare the different groups on various attributes.
+`group_by` is one of the most useful functions. It divides the data into different groups and then `summarize` summarizes each of the group. This way we can compare the different groups on various attributes.
 
 Example: What's the mean and median price in each of the five boroughs?
 
@@ -685,7 +685,7 @@ df %>%
 
 ```
 
-*Exercise: For each boroughs, which neighborhood has the highest variance in price?*
+*Exercise: For each borough, which neighborhood has the highest variance in price?*
 ```{r}
 
 ```
@@ -704,7 +704,7 @@ df %>%
 
 ## Visual exploration
 
-We're going to use ggplot2 library, which we loaded earlier, for some visual exploration of the data. Actually, this is how we should have begun our data exploration. We couldn't do this, because we needed to learn the six verbs first to get the full benefit of ggplot2.
+We're going to use ggplot2 library, which we loaded earlier, for some visual exploration of the data. Actually, this is how we should have begun our data exploration. We couldn't do this because we needed to learn the six verbs first to get the full benefit of ggplot2.
 
 Unfortunately, we won't have time today to learn ggplot2. It may be possible to organize a separate session later on visualization in R.
 
