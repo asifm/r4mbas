@@ -621,7 +621,7 @@ df %>%
 
 ```
 
-*Exercise: How many listings have perfect 100 for review_scores_rating and price less than 50? *
+*Exercise: How many listings have a perfect 100 of review_scores_rating and cost less than 50?*
 ```{r}
 
 ```
