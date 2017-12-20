@@ -65,7 +65,7 @@ To write your own code chunk, look for the **insert** button above and then sele
 
 # The data
 
-The dataset contains almost all the listings in NYC in May 2017.The data came from [Inside Airbnb](http://insideairbnb.com/get-the-data.html).
+The dataset contains almost all the Airbnb listings in NYC in May 2017. The data came from [Inside Airbnb](http://insideairbnb.com/get-the-data.html).
 
 It's always a good idea to approach a new dataset with a few basic questions. Some examples:
 
