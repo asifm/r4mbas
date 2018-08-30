@@ -475,7 +475,7 @@ is the same as
 df %>% filter(price > 8000)
 ```
 
-Also,
+Similarly,
 ```{r}
 select(df, price, review_scores_rating, listing_url)
 ```
@@ -486,7 +486,7 @@ df %>% select(price, review_scores_rating, listing_url)
 
 The left side of the pipe is used as the first parameter of the function on the right side of the pipe. 
 
-This is how `filter`, `select`, and such functions receives a dataframe, does something to it, returns the modified dataframe and passes it on to the next function.
+This is how `filter`, `select`, and such functions receive a dataframe, do something to it, return the modified dataframe and passes it on to the next function.
 
 Here's again the piped expression. Make sure you understand what's going on.
 ```{r}
