@@ -155,7 +155,7 @@ We'll use the function `read_csv`, which comes from the library `readr`, to load
 *Discuss: What'a csv file? What other formats are out there for storing data? How can we load data from an unfamiliar format?*
 
 ```{r}
-df <- read_csv("airbnb_newyork.csv")
+df <- read_csv("airbnb_nyc_data.csv")
 ```
 
 The first thing to check is whether the data have been successfully loaded and assigned to the variable (here `df`). We don't see any error — which is a good sign. We can also see the variable `df` in the environment pane (usually to the right of this code editor pane – click on "Environment" if hidden).
