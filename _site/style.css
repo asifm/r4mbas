@@ -1,0 +1,20 @@
+body {
+	font-family: Georgia, "Segoe UI", Roboto;
+	color: black;
+}
+
+#table-of-contents h2 {
+	background-color: #E57200;
+}
+
+#table-of-contents {
+	background-color: #232d4b;
+}
+
+h1, h2, h3, h4 {
+	color: #232d4b;
+}
+
+code, kbd, pre, samp {
+	font-family: Consolas, Cousine, "Roboto Mono";
+}
