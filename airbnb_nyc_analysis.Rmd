@@ -220,18 +220,7 @@ Tip: Give short descriptive names to your variables. This will make the code eas
 
 ## Data structures
 
-`vector`, `list`, `matrix`, and `dataframe` are some of the main data-structures for storing data in R.
-
-Think of a vector as simply a sequence of data. For example, a column in a data table is a vector. This is how you create a vector: `c(element1, element2, element3, ...)`
-
-```{r}
-vec <- c(3, 5, 10, 20)
-print(vec)
-```
-
-## Data types
-
-We also need to know a little about data types. These are the main ones:
+`o need to know a little about data types. These are the main ones:
 
 - Integer: such as 2, 543, 90.
 - Double: numbers other than integers, such as 4.56, 1/33. Doubles are always approximations.
@@ -246,6 +235,17 @@ There are some other important data types:
 
 
 ## Functions
+## Data structures
+
+`vector`, `list`, `matrix`, and `dataframe` are some of the main data-structures for storing data in R.
+
+Think of a vector as simply a sequence of data. For example, a column in a data table is a vector. This is how you create a vector: `c(element1, element2, element3, ...)`
+
+```{r}
+vec <- c(3, 5, 10, 20)
+print(vec)
+```
+
 
 You're familiar with Excel functions, such as `sum()` or `average()`. The concept of functions in a programming language is no different. You give some values (called parameters) to a function. The function does something with the values and returns a new value. So `sum(3, 6, 1)` returns 10. Here `sum` is the name of the function, 3, 6, 1 are parameters, and 10 is the returned value.
 
@@ -305,7 +305,9 @@ message("The mean of the vector vec2 is ", calculated_mean)
 
 ```
 
-# Back to Analysis
+# Back to Analysi[Quiz Time]
+
+s
 
 Let's take another look at the data types of our dataframe.
 
