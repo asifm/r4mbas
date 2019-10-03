@@ -150,17 +150,18 @@ $(document).ready(function () {
       </ul></li>
       <li><a href="#detour-programming-concepts">Detour: Programming Concepts</a><ul>
       <li><a href="#variables-programming">Variables (programming)</a></li>
+      <li><a href="#data-structures">Data structures</a></li>
       <li><a href="#data-types">Data types</a></li>
       <li><a href="#functions">Functions</a></li>
-      <li><a href="#comments">Comments</a></li>
       </ul></li>
       <li><a href="#back-to-analysis">Back to Analysis</a><ul>
-      <li><a href="#the-perils-of-the-wrong-data-type">The perils of the wrong data type</a></li>
       <li><a href="#missing-values">Missing values</a></li>
-      <li><a href="#the-verbs">The Verbs</a></li>
+      <li><a href="#a-set-of-verbs">A Set of Verbs</a></li>
       </ul></li>
       <li><a href="#explore-visually">Explore Visually</a></li>
-      <li><a href="#keep-learning">Keep Learning</a></li>
+      <li><a href="#keep-learning">Keep Learning</a><ul>
+      <li><a href="#download-cheatsheets">Download Cheatsheets</a></li>
+      </ul></li>
       </ul>
     </div>
 </div>
@@ -169,58 +170,55 @@ $(document).ready(function () {
 <div id="goals" class="section level1">
 <h1>Goals</h1>
 <ul>
-<li>Learn to think like a data analyst</li>
-<li>Learn the basics of R programming language</li>
-<li>Learn some powerful techniques for analyzing and exploring a dataset</li>
+<li>Get a feel for what R is all about</li>
+<li>Get familiar with an analysis workflow that goes beyond Excel</li>
+<li>Learn some powerful techniques of exploring a large-ish dataset</li>
 </ul>
 <p>We’ll do these by taking a close look at some interesting data: the Airbnb listings in New York City as of August 2019.</p>
-<p>It’s okay if you can’t start using these techniques right away after the workshop. To be comfortable with a tool like R takes some time and practice. But we do hope that your exposure today to these tools and techniques will open your eyes to possibilities and motivate you to keep learning.</p>
+<p>It’s okay if you can’t start using these techniques right away after the workshop. To be comfortable with a tool like R takes some time and practice. Your exposure today to these tools and techniques will likely show you R’s possibilities and motivate you to keep learning.I suggest some learning resources at the end of this document.</p>
 </div>
 <div id="rstudio" class="section level1">
 <h1>RStudio</h1>
-<p>RStudio is a free program that makes writing R code much more enjoyable and efficient. Strictly speaking, you don’t need it to write R code, but I highly recommend RStudio.</p>
-<p>It has four main panes. This one — assuming you’re reading this on RStudio — is the “code editor” (also known as “script editor” and “source editor”). This is where we’ll spend most of our time. I’ll explain the other panes later.</p>
+<p>RStudio is a free program that makes writing R code much more enjoyable and efficient. Strictly speaking, you don’t need it to write R code, but I highly recommend you use RStudio.</p>
+<p>It has four main panes. This one — assuming you’re reading this on RStudio — is the “code editor” (also known as “script editor” and “source editor”). This is where we’ll spend most of our time. I’ll describe the other panes later.</p>
 <div id="r-notebook" class="section level2">
 <h2>R Notebook</h2>
 <p>Before starting our analysis, let’s understand how this document works. (I’m assuming you’re reading this on RStudio.)</p>
-<p>This document is an R Notebook. An R Notebook contains commentary interspersed with code chunks. The code chunks can be run (executed) independently and interactively. The output will appear below the code chunk. R Notebooks are easy to convert to well-formatted final documents as a pdf file, a webpage, or an MS Word file. <a href="http://rmarkdown.rstudio.com/r_notebooks.html">More here</a></p>
-<p>Click on the <code>preview</code> button above to get an idea.</p>
-<p>What you’re reading is the commentary and what you see below is the container for a code chunk.</p>
+<p>This document is an <em>R Notebook</em>. An R Notebook contains commentary interspersed with code chunks. The code chunks can be run (executed) independently and interactively. The output will appear below the code chunk. R Notebooks are easy to convert to well-formatted final documents as a pdf file, a webpage, or an MS Word file. <a href="http://rmarkdown.rstudio.com/r_notebooks.html">More here</a></p>
+<p>What you’re reading is <em>commentary</em> and what you see below is the container for a code chunk.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># The code goes here</span></a></code></pre></div>
 <p>To run a code chunk, click on the little triangle at the right edge of the code chunk. Or, use the keyboard shortcut <strong>CTRL + SHIFT + ENTER</strong> (Windows) or <strong>CMD + SHIFT + ENTER</strong> (Mac).</p>
 <p>🏏 Run the chunk below and see what happens.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">a &lt;-<span class="st"> </span><span class="dv">5</span> <span class="op">+</span><span class="st"> </span><span class="dv">7</span></a>
 <a class="sourceLine" id="cb2-2" title="2"><span class="kw">print</span>(a)</a></code></pre></div>
 <pre><code>## [1] 12</code></pre>
-<p>As you see, the output appears under the code. This way you can immediately see the result of the code you write at all steps of the analysis.</p>
+<p>Do you see some output below the code chunk? This way you can immediately see the result of your code as you work on your analysis.</p>
 <p>(Do you know what’s going on in the code above? We’ll talk about variables and assignments later.)</p>
-<p>Feel free to add your commentary and code anywhere in this document. You can always download the unmodified version from <a href="https://github.com/asifm/tech-workshops/tree/master/Datasets">here</a>.</p>
+<p>Feel free to add your commentary and code anywhere in this document. You can always download the <a href="https://github.com/asifm/workshops/archive/R-intro-2019.zip">unmodified version</a>.</p>
 <p>To write your own code chunk, look for the <strong>insert</strong> button above and then select <strong>R</strong>. Or, use the keyboard shortcut <strong>CTRL + ALT + I</strong> (Windows) or <strong>CMD + OPTION + I</strong> (Mac).</p>
 <p>🏏 Place the cursor below and create a container for writing code. Now write some code and run it. For example, find the result of <code>3543 / 562</code>.</p>
 </div>
 </div>
 <div id="the-data" class="section level1">
 <h1>The Data</h1>
-<p>The dataset contains almost all the Airbnb listings in NYC in May 2017. The data came from <a href="http://insideairbnb.com/get-the-data.html">Inside Airbnb</a>.</p>
+<p>The dataset contains almost all the Airbnb listings in NYC as of August 2019. The data came from <a href="http://insideairbnb.com/get-the-data.html">Inside Airbnb</a>.</p>
 <p>It’s always a good idea to approach a new dataset with a few basic questions. Some examples:</p>
 <ul>
 <li>What kind of data is here? What are the variables? How many observations?</li>
 <li>Who collected these data? How? Why?</li>
 <li>How accurate are these data?</li>
 <li>How complete are these data? Are there too many missing values?</li>
-<li>Are there anomalies that I need to be aware of?</li>
 <li>Do I have the legal rights to use these data? Under what conditions?</li>
 </ul>
 <p><a href="http://insideairbnb.com/behind.html">Here’s some background information</a> that may answer some of these questions.</p>
-<p>Let’s take a look at the data. Open the Excel file. Browse around a bit.</p>
+<p>Let’s take a look at the data. Open the Excel file in the <code>data</code> folder. Browse around a bit.</p>
 <p>🤔 Can you explain what each column is about?</p>
-<p>🤔 Are there any data that you’d like to have but is not there?</p>
 <p>🤔 What’s the first thing you’d like to find out from these data?</p>
 <p>🤔 What do you think about the quality of the data?</p>
 </div>
 <div id="the-context" class="section level1">
 <h1>The Context</h1>
-<p>Data analysis happens within a broader context. Usually, there’s an overarching business, policy, or scientific question that one would like to answer. Often that question is not very clear. Whatever the case, you need to approach the data with curiosity about the larger context.</p>
+<p>Data analysis happens within a broader context. Usually, there’s an overarching business, policy, or scientific question that one would like to answer. Often, though, the question is not very clear. Whatever the case, you need to approach the data with curiosity about the larger context.</p>
 <p>The more you understand the context of the data, the better will be your questions and hypotheses guiding your analysis.</p>
 <p>For our dataset, we should have a good understanding of the business model of Airbnb as well as the economy and geography of NYC.</p>
 <p>🤔 Is there anything else we should know about?</p>
@@ -245,7 +243,8 @@ $(document).ready(function () {
 <div id="install-and-load-packages" class="section level2">
 <h2>Install and load packages</h2>
 <p>We’ll first install a few packages that we’ll need at different stages of the analysis. This may take a minute or two.</p>
-<p>The symbol <code>#</code> at the start of a line means the line is a comment. These lines are left alone (that is, not executed) when you run a code chunk. You can use comments either to explain your code or to temporarily prevent a line of code from executing. If, below, the lines containing <code>install.packages</code> are “commented out,” please remove the <code>#</code>s before running the code chunk.</p>
+<p>The symbol <code>#</code> at the start of a line means the line is a comment. These lines are left alone (that is, not executed) when you run a code chunk. You can use comments either to explain your code within a code chunk or to temporarily prevent a line of code from executing.</p>
+<p>If the lines containing <code>install.packages</code> are “commented out,” please remove the <code>#</code>s before running the code chunk.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># For loading data</span></a>
 <a class="sourceLine" id="cb4-2" title="2"><span class="co"># install.packages(&quot;readr&quot;)</span></a>
 <a class="sourceLine" id="cb4-3" title="3"></a>
@@ -307,6 +306,7 @@ $(document).ready(function () {
 <p>The first thing to check is whether the data have been successfully loaded and assigned to the variable (here <code>df</code>). We don’t see any error — which is a good sign. We can also see the variable <code>df</code> in the environment pane (usually to the right of this code editor pane – click on “Environment” if hidden).</p>
 <p>The next thing to check is whether <code>read_csv</code> was able to correctly infer the data type of each variable.</p>
 <p>For a better glimpse, use the function <code>glimpse</code>.</p>
+<p>🤔 How am I supposed to know what functions are out there?</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">glimpse</span>(df)</a></code></pre></div>
 <pre><code>## Observations: 37,762
 ## Variables: 44
@@ -354,7 +354,6 @@ $(document).ready(function () {
 ## $ is_business_travel_ready    &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE,...
 ## $ cancellation_policy         &lt;chr&gt; &quot;flexible&quot;, &quot;flexible&quot;, &quot;moderate&quot;...
 ## $ reviews_per_month           &lt;dbl&gt; 0.02, 0.02, 0.02, 0.02, 0.02, 0.02...</code></pre>
-<p>🤔 How am I supposed to know what functions are out there?</p>
 <p>What you see within the angular brackets <code>&lt;...&gt;</code> next to each column name is the data type of that column.</p>
 <p>But what are data types? And why are they important?</p>
 <p>What exactly is a variable in programming?</p>
@@ -366,36 +365,41 @@ $(document).ready(function () {
 <h1>Detour: Programming Concepts</h1>
 <div id="variables-programming" class="section level2">
 <h2>Variables (programming)</h2>
-<p>In programming, a variable stores some value (not to be confused with what we call variable in statistics). Our code can then reference the name of the variable for different purposes.</p>
+<p>In programming, a variable stores some value. Our code can then reference the name of the variable to do something with it.</p>
 <p>We use a left-facing arrow to assign a value to a variable. The arrow looks like this: <code>&lt;-</code> (the less-than sign followed by a hyphen).</p>
 <p>For example, in the code below, <code>foo</code> and <code>bar</code> are variable names. We assigned the values <code>43</code> and <code>"kitten"</code> to <code>foo</code> and <code>bar</code> respectively. You can read them as <code>foo</code> gets <code>43</code> and <code>bar</code> gets <code>"kitten"</code>.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">foo &lt;-<span class="st"> </span><span class="dv">43</span></a>
 <a class="sourceLine" id="cb12-2" title="2">bar &lt;-<span class="st"> &quot;kitten&quot;</span></a></code></pre></div>
-<p>todo:</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">print</span>(foo <span class="op">*</span><span class="st"> </span><span class="dv">10</span>)</a></code></pre></div>
+<p>Let’s do something with these variables.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co"># Multiply foo by 10</span></a>
+<a class="sourceLine" id="cb13-2" title="2"><span class="kw">print</span>(foo <span class="op">*</span><span class="st"> </span><span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## [1] 430</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">print</span>(bar)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># Just see the value of bar</span></a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="kw">print</span>(bar)</a></code></pre></div>
 <pre><code>## [1] &quot;kitten&quot;</code></pre>
-<p>todo-clarify::Important: I’ve been using the word <em>variable</em> to mean two different things. A variable in programming is what I described above. A variable in statistics is an attribute of something, whatever the data is about. For example, if the data is about people, some variables could be age, sex, income, address. The names of the columns of a dataframe are variables in the statistical sense. Usually, the context would clarify which meaning is intended.</p>
+<p>Important: The word <code>variable</code> can be ambiguous. You may be familiar with the term as used in statistics. For example, if some data is about people, some variables could be age, sex, income and address. The names of the columns of a dataframe are variables in the statistical sense. Usually, the context would clarify which meaning is intended.</p>
 <p>Tip: Give short descriptive names to your variables. This will make the code easy to follow.</p>
 <p>🏏 A room is 11 yards long and 7.5 yards wide. Assign these values to <code>width</code> and <code>length</code> variables and then calculate the <code>area</code> of the room. You can, of course, give different names to these variables if you wish.</p>
 </div>
-<div id="data-types" class="section level2">
-<h2>Data types</h2>
-<p>To understand how R stores and handles information, we need to know a little about data types.</p>
-<p>But, first, vector: one of the key concepts in R. Think of a vector as simply a sequence of data. For example, a column in a data table is a vector. This is how you create a vector: <code>c(element1, element2, element3, ...)</code></p>
+<div id="data-structures" class="section level2">
+<h2>Data structures</h2>
+<p><code>vector</code>, <code>list</code>, <code>matrix</code>, and <code>dataframe</code> are some of the main data-structures for storing data in R.</p>
+<p>Think of a vector as simply a sequence of data. For example, a column in a data table is a vector. This is how you create a vector: <code>c(element1, element2, element3, ...)</code></p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>)</a>
 <a class="sourceLine" id="cb17-2" title="2"><span class="kw">print</span>(vec)</a></code></pre></div>
 <pre><code>## [1]  3  5 10 20</code></pre>
-<p>A vector can contain four main types of data:</p>
+</div>
+<div id="data-types" class="section level2">
+<h2>Data types</h2>
+<p>We also need to know a little about data types. These are the main ones:</p>
 <ul>
 <li>Integer: such as 2, 543, 90.</li>
 <li>Double: numbers other than integers, such as 4.56, 1/33. Doubles are always approximations.</li>
 <li>Character: a sequence of letters, numbers, punctuation, etc., such as “rainbow”, “34265”. Character data are always written within quotes, either single or double (we’ll always use double for consistency).</li>
 <li>Logical: data that can take on one of only two values — TRUE or FALSE.</li>
 </ul>
-<p>🤔 Why is “34265” of character type? What’s a real-world example of this kind of data?</p>
-<p>There are two other important ways to store data: - <code>factor</code>, for categorical variables (here “variable” in statistical sense). A categorical variable is one that can take on a limited, fixed number of values. - <code>date-time</code> or just <code>date</code></p>
+<p>🤔 Why is “34265” above of the type character? What’s a real-world example of this kind of data?</p>
+<p>There are some other important data types: - <code>factor</code>, for categorical variables (here “variable” in statistical sense). A categorical variable is one that can take on a limited, fixed number of values. - <code>date-time</code> and <code>date</code></p>
 </div>
 <div id="functions" class="section level2">
 <h2>Functions</h2>
@@ -418,7 +422,7 @@ $(document).ready(function () {
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="co"># Add 10 to 35</span></a>
 <a class="sourceLine" id="cb22-2" title="2"><span class="kw">add10</span>(<span class="dv">35</span>)</a></code></pre></div>
 <pre><code>## [1] 45</code></pre>
-<p>Today, we won’t write any function, Rather, we’ll use functions written by others. Here’s an example: the <code>mean</code> function, which comes preloaded in R.</p>
+<p>We won’t write any function today. Rather, we’ll use functions that R — and the packages we loaded — make available to us. Here’s an example: the <code>mean</code> function, which comes preloaded in R.</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="co"># First let&#39;s create a vector</span></a>
 <a class="sourceLine" id="cb24-2" title="2">vec2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">23</span>, <span class="dv">53</span>, <span class="dv">11</span>, <span class="dv">34</span>, <span class="dv">87</span>, <span class="dv">100</span>, <span class="dv">5</span>, <span class="dv">12</span>, <span class="dv">66</span>, <span class="dv">9</span>, <span class="dv">87</span>, <span class="dv">110</span>, <span class="dv">20</span>, <span class="dv">33</span>, <span class="dv">54</span>, <span class="dv">43</span>, <span class="dv">76</span>)</a>
 <a class="sourceLine" id="cb24-3" title="3"></a>
@@ -428,20 +432,13 @@ $(document).ready(function () {
 <a class="sourceLine" id="cb24-7" title="7"><span class="co"># Then output it with some text description</span></a>
 <a class="sourceLine" id="cb24-8" title="8"><span class="kw">message</span>(<span class="st">&quot;The mean of the vector vec2 is &quot;</span>, calculated_mean)</a></code></pre></div>
 <pre><code>## The mean of the vector vec2 is 48.4117647058824</code></pre>
-<p>🏏 calculate the sum, median, and standard deviation (hint: sd) of the vector vec2.</p>
-<p>Now that we understand data types, let’s load some new data.</p>
-<p>🏏 You’ll see there are two other data files in the <code>data</code> folder: <code>babynames_2018.csv</code> and <code>babynames_1880.csv</code>. They contain the top 1000 names of babies born in 2018 and 1880, respectively. Load the 2018 data to a dataframe (hint: <code>read_csv</code>). Assign the dataframe to a variable named <code>df_babynames</code> (You can give a variable any name you like — but it’s always a good idea to give variables meaningful, consistent names).</p>
+<p>🏏 Calculate the sum, median, and standard deviation (hint: sd) of the vector vec2.</p>
+<p>🏏 Let’s load some new data. You’ll see there are two other data files in the <code>data</code> folder: <code>babynames_2018.csv</code> and <code>babynames_1880.csv</code>. They contain the top 1000 names of babies born in 2018 and 1880, respectively. Load the 2018 data to a dataframe (hint: <code>read_csv</code>). Assign the dataframe to a variable named <code>df_babynames</code> (You can give a variable any name you like — but it’s always a good idea to give variables meaningful, consistent names).</p>
 <p>🏏 Now take a look at the dataframe’s data types. (hint: <code>glimpse</code>)</p>
-</div>
-<div id="comments" class="section level2">
-<h2>Comments</h2>
-<p>todo</p>
 </div>
 </div>
 <div id="back-to-analysis" class="section level1">
 <h1>Back to Analysis</h1>
-<div id="the-perils-of-the-wrong-data-type" class="section level2">
-<h2>The perils of the wrong data type</h2>
 <p>Let’s take another look at the data types of our dataframe.</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">glimpse</span>(df)</a></code></pre></div>
 <pre><code>## Observations: 37,762
@@ -492,8 +489,8 @@ $(document).ready(function () {
 ## $ reviews_per_month           &lt;dbl&gt; 0.02, 0.02, 0.02, 0.02, 0.02, 0.02...</code></pre>
 <p>Some of the data types don’t look right. Let’s correct them.</p>
 <p>🤔 why is it important to have the correct data type?</p>
-<p>But, first, let’s learn how to reference a column in a dataframe: first the name of the dataframe, then <code>$</code> and then the column name. For example: <code>df$cancellation_policy</code> or <code>df_babynames$Gender</code>.</p>
-<p>todo-clearly:: To change data type, we apply the relevant function, such <code>as.character</code> or <code>as.factor</code>, to a column and then assign the output of the function (values with changed data type) to the same column.</p>
+<p>But, first, let’s learn how to reference a column in a dataframe: first the name of the dataframe, then <code>$</code> and then the column name. For example: <code>df$cancellation_policy</code> or <code>df_babynames$name</code>.</p>
+<p>To change data type, we apply the relevant function, such <code>as.character</code> or <code>as.factor</code>, to a column and then assign the output of the function (values with changed data type) to the same column.</p>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">df<span class="op">$</span>host_id &lt;-<span class="st"> </span><span class="kw">as.character</span>(df<span class="op">$</span>host_id)</a>
 <a class="sourceLine" id="cb28-2" title="2">df<span class="op">$</span>host_response_rate &lt;-<span class="st"> </span><span class="kw">as.double</span>(df<span class="op">$</span>host_response_rate)</a></code></pre></div>
 <pre><code>## Warning: NAs introduced by coercion</code></pre>
@@ -502,10 +499,9 @@ $(document).ready(function () {
 <p>🤔 What is the rationale for each of these changes?</p>
 <p>Side note: The last function <code>mdy</code> is different from the others. Normally, working with date-time in R (and in programming in general) is not simple. The <code>lubridate</code> package, which we loaded earlier, makes the job much easier. We’ll not go into the details of date-times. What we did here with <code>mdy</code> is convert character data into date data. We used <code>mdy</code> because the character data were in the form month-date-year. If they were in the form, for example, year-month-date, we would’ve used the function <code>ymd</code>.</p>
 <p>🏏 Change the data type of any other variables you think necessary.</p>
-</div>
 <div id="missing-values" class="section level2">
 <h2>Missing values</h2>
-<p>Some values will almost inevitably be missing in a medium to large dataset. Let’s inspect our data for missing values using the function <code>summary</code>, which will give us plenty of other relevant information as well.</p>
+<p>Let’s inspect our data for missing values using the function <code>summary</code>, which will give us plenty of other relevant information as well.</p>
 <div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw">summary</span>(df)</a></code></pre></div>
 <pre><code>##        id           listing_url            name          
 ##  Min.   :    2595   Length:37762       Length:37762      
@@ -630,8 +626,8 @@ $(document).ready(function () {
 <p>In our case, we’ll go with the last option.</p>
 <p>🤔 Is the last option the best for our dataset? What would be a better alternative?</p>
 </div>
-<div id="the-verbs" class="section level2">
-<h2>The Verbs</h2>
+<div id="a-set-of-verbs" class="section level2">
+<h2>A Set of Verbs</h2>
 <p>Finally, we’re ready to dive into the data. We’ll use six functions — think of them as six verbs — to slice and dice the data in all kinds of ways. These functions come from the <code>dplyr</code> package. They are:</p>
 <ul>
 <li>filter</li>
@@ -657,7 +653,7 @@ $(document).ready(function () {
 !x      Not x
 x | y   x OR y
 x &amp; y   x AND y</code></pre>
-<p>Example: Return aataframe with only those rows where the neighborhood is Chelsea.</p>
+<p>Example: Return a dataframe with only those rows where the neighborhood is Chelsea.</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">filter</span>(df, neighborhood <span class="op">==</span><span class="st"> &quot;Chelsea&quot;</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 796 x 44
 ##        id listing_url name  description host_id host_name host_since
@@ -822,7 +818,7 @@ x &amp; y   x AND y</code></pre>
 <li>If you want all columns except two: <code>select(name_of_dataframe, -c(column_to_exlude1, column_to_exclue2))</code></li>
 <li>If you want the third through eighth columns: <code>select(name_of_dataframe, 3:8)</code></li>
 </ul>
-<p>Example: Return a dataframe with only the listing_url column</p>
+<p>Example: Return a dataframe with only the listing_url column.</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="kw">select</span>(df, listing_url)</a></code></pre></div>
 <pre><code>## # A tibble: 37,762 x 1
 ##    listing_url                          
@@ -838,7 +834,7 @@ x &amp; y   x AND y</code></pre>
 ##  9 https://www.airbnb.com/rooms/9732432 
 ## 10 https://www.airbnb.com/rooms/13987276
 ## # ... with 37,752 more rows</code></pre>
-<p>Example: Return a dataframe with columns host_response_time, cancellation_policy, and neighborhood</p>
+<p>Example: Return a dataframe with columns host_response_time, cancellation_policy, and neighborhood.</p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw">select</span>(df, host_response_time, cancellation_policy, neighborhood)</a></code></pre></div>
 <pre><code>## # A tibble: 37,762 x 3
 ##    host_response_time cancellation_policy neighborhood    
@@ -1261,6 +1257,18 @@ x &amp; y   x AND y</code></pre>
 <p>To learn how to do statistics using R, you can watch <a href="https://www.youtube.com/watch?v=_V8eKsto3Ug">this YouTube video</a></p>
 <p>To learn R’s programming concepts (which we didn’t cover in detail today), you can watch <a href="https://www.youtube.com/watch?v=fDRa82lxzaU">this YouTube video</a></p>
 <p><a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html">An Introduction to R</a> is perhaps the most comprehensive introduction. <em>But it’s not the best place to start if you’re a complete beginner.</em></p>
+<div id="download-cheatsheets" class="section level2">
+<h2>Download Cheatsheets</h2>
+<ul>
+<li><a href="https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf">RStudio</a></li>
+<li><a href="https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf">Data transformation with dplyr</a></li>
+<li><a href="https://github.com/rstudio/cheatsheets/raw/master/strings.pdf">Work with strings</a></li>
+<li><a href="https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf">Data import</a></li>
+<li><a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf">R Markdown</a></li>
+<li><a href="https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf">Data visualization with ggplot2</a></li>
+<li></li>
+</ul>
+</div>
 </div>
 </div>
 

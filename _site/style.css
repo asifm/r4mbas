@@ -18,6 +18,10 @@ body p {
 	background-color: #232d4b;
 }
 
+p.author {
+	color: white;
+}
+
 h1.title {
 	font-size: 3rem;
 	font-weight: 200;

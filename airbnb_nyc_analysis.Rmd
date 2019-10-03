@@ -15,29 +15,27 @@ output:
 
 # Goals
 
-- Learn to think like a data analyst
-- Learn the basics of R programming language
-- Learn some powerful techniques for analyzing and exploring a dataset
+- Get a feel for what R is all about
+- Get familiar with an analysis workflow that goes beyond Excel
+- Learn some powerful techniques of exploring a large-ish dataset
 
 We'll do these by taking a close look at some interesting data: the Airbnb listings in New York City as of August 2019.
 
-It's okay if you can't start using these techniques right away after the workshop. To be comfortable with a tool like R takes some time and practice. But we do hope that your exposure today to these tools and techniques will open your eyes to possibilities and motivate you to keep learning.
+It's okay if you can't start using these techniques right away after the workshop. To be comfortable with a tool like R takes some time and practice. Your exposure today to these tools and techniques will likely show you R's possibilities and motivate you to keep learning.I suggest some learning resources at the end of this document.
 
 # RStudio
 
-RStudio is a free program that makes writing R code much more enjoyable and efficient. Strictly speaking, you don't need it to write R code, but I highly recommend RStudio.
+RStudio is a free program that makes writing R code much more enjoyable and efficient. Strictly speaking, you don't need it to write R code, but I highly recommend you use RStudio.
 
-It has four main panes. This one — assuming you're reading this on RStudio  — is the "code editor" (also known as "script editor" and "source editor"). This is where we'll spend most of our time. I'll explain the other panes later. 
+It has four main panes. This one — assuming you're reading this on RStudio  — is the "code editor" (also known as "script editor" and "source editor"). This is where we'll spend most of our time. I'll describe the other panes later. 
 
 ## R Notebook
 
 Before starting our analysis, let's understand how this document works. (I'm assuming you're reading this on RStudio.)
 
-This document is an R Notebook. An R Notebook contains commentary interspersed with code chunks. The code chunks can be run (executed) independently and interactively. The output will appear below the code chunk. R Notebooks are easy to convert to well-formatted final documents as a pdf file, a webpage, or an MS Word file. [More here](http://rmarkdown.rstudio.com/r_notebooks.html)
+This document is an *R Notebook*. An R Notebook contains commentary interspersed with code chunks. The code chunks can be run (executed) independently and interactively. The output will appear below the code chunk. R Notebooks are easy to convert to well-formatted final documents as a pdf file, a webpage, or an MS Word file. [More here](http://rmarkdown.rstudio.com/r_notebooks.html)
 
-Click on the `preview` button above to get an idea. 
-
-What you're reading is the commentary and what you see below is the container for a code chunk.
+What you're reading is *commentary* and what you see below is the container for a code chunk.
 
 ```{r}
 # The code goes here
@@ -51,11 +49,11 @@ a <- 5 + 7
 print(a)
 ```
 
-As you see, the output appears under the code. This way you can immediately see the result of the code you write at all steps of the analysis.
+Do you see some output below the code chunk? This way you can immediately see the result of your code as you work on your analysis.
 
 (Do you know what's going on in the code above? We'll talk about variables and assignments later.)
 
-Feel free to add your commentary and code anywhere in this document. You can always download the unmodified version from [here](https://github.com/asifm/tech-workshops/tree/master/Datasets). 
+Feel free to add your commentary and code anywhere in this document. You can always download the [unmodified version](https://github.com/asifm/workshops/archive/R-intro-2019.zip). 
 
 To write your own code chunk, look for the **insert** button above and then select **R**. Or, use the keyboard shortcut **CTRL + ALT + I** (Windows) or **CMD + OPTION + I** (Mac). 
 
@@ -66,7 +64,7 @@ To write your own code chunk, look for the **insert** button above and then sele
 
 # The Data
 
-The dataset contains almost all the Airbnb listings in NYC in May 2017. The data came from [Inside Airbnb](http://insideairbnb.com/get-the-data.html).
+The dataset contains almost all the Airbnb listings in NYC as of August 2019. The data came from [Inside Airbnb](http://insideairbnb.com/get-the-data.html).
 
 It's always a good idea to approach a new dataset with a few basic questions. Some examples:
 
@@ -74,16 +72,13 @@ It's always a good idea to approach a new dataset with a few basic questions. So
 - Who collected these data? How? Why?
 - How accurate are these data?
 - How complete are these data? Are there too many missing values?
-- Are there anomalies that I need to be aware of?
 - Do I have the legal rights to use these data? Under what conditions?
 
 [Here's some background information](http://insideairbnb.com/behind.html) that may answer some of these questions.
 
-Let's take a look at the data. Open the Excel file. Browse around a bit.
+Let's take a look at the data. Open the Excel file in the `data` folder. Browse around a bit.
 
 🤔 Can you explain what each column is about?
-
-🤔 Are there any data that you'd like to have but is not there?
 
 🤔 What's the first thing you'd like to find out from these data?
 
@@ -92,7 +87,7 @@ Let's take a look at the data. Open the Excel file. Browse around a bit.
 
 # The Context
 
-Data analysis happens within a broader context. Usually, there's an overarching business, policy, or scientific question that one would like to answer. Often that question is not very clear. Whatever the case, you need to approach the data with curiosity about the larger context.  
+Data analysis happens within a broader context. Usually, there's an overarching business, policy, or scientific question that one would like to answer. Often, though, the question is not very clear. Whatever the case, you need to approach the data with curiosity about the larger context.  
 
 The more you understand the context of the data, the better will be your questions and hypotheses guiding your analysis.
 
@@ -124,7 +119,9 @@ The map gives us an idea about the relative size and location of the five boroug
 
 We'll first install a few packages that we'll need at different stages of the analysis. This may take a minute or two. 
 
-The symbol `#` at the start of a line means the line is a comment. These lines are left alone (that is, not executed) when you run a code chunk. You can use comments either to explain your code or to temporarily prevent a line of code from executing. If, below, the lines containing `install.packages` are "commented out," please remove the `#`s before running the code chunk.
+The symbol `#` at the start of a line means the line is a comment. These lines are left alone (that is, not executed) when you run a code chunk. You can use comments either to explain your code within a code chunk or to temporarily prevent a line of code from executing. 
+
+If the lines containing `install.packages` are "commented out," please remove the `#`s before running the code chunk.
 
 ```{r, message=FALSE}
 # For loading data
@@ -169,11 +166,11 @@ The next thing to check is whether `read_csv` was able to correctly infer the da
 
 For a better glimpse, use the function `glimpse`.
 
+🤔 How am I supposed to know what functions are out there?
+
 ```{r}
 glimpse(df)
 ```
-
-🤔 How am I supposed to know what functions are out there?
 
 What you see within the angular brackets `<...>` next to each column name is the data type of that column. 
 
@@ -189,7 +186,7 @@ Let's take a detour.
 
 ## Variables (programming)
 
-In programming, a variable stores some value (not to be confused with what we call variable in statistics). Our code can then reference the name of the variable for different purposes. 
+In programming, a variable stores some value. Our code can then reference the name of the variable to do something with it. 
 
 We use a left-facing arrow to assign a value to a variable.  The arrow looks like this: `<-` (the less-than sign followed by a hyphen).
 
@@ -201,13 +198,17 @@ foo <- 43
 bar <- "kitten"
 ```
 
-todo: 
+Let's do something with these variables.
+
 ```{r}
+# Multiply foo by 10
 print(foo * 10)
+
+# Just see the value of bar
 print(bar)
 ```
 
-todo-clarify::Important: I've been using the word *variable* to mean two different things. A variable in programming is what I described above. A variable in statistics is an attribute of something, whatever the data is about. For example, if the data is about people, some variables could be age, sex, income, address. The names of the columns of a dataframe are variables in the statistical sense. Usually, the context would clarify which meaning is intended.
+Important: The word `variable` can be ambiguous. You may be familiar with the term as used in statistics. For example, if some data is about people, some variables could be age, sex, income and address. The names of the columns of a dataframe are variables in the statistical sense. Usually, the context would clarify which meaning is intended.
 
 Tip: Give short descriptive names to your variables. This will make the code easy to follow.
 
@@ -217,29 +218,31 @@ Tip: Give short descriptive names to your variables. This will make the code eas
 
 ```
 
-## Data types
+## Data structures
 
-To understand how R stores and handles information, we need to know a little about data types.
+`vector`, `list`, `matrix`, and `dataframe` are some of the main data-structures for storing data in R.
 
-But, first, vector: one of the key concepts in R. Think of a vector as simply a sequence of data. For example, a column in a data table is a vector. This is how you create a vector: `c(element1, element2, element3, ...)`
+Think of a vector as simply a sequence of data. For example, a column in a data table is a vector. This is how you create a vector: `c(element1, element2, element3, ...)`
 
 ```{r}
 vec <- c(3, 5, 10, 20)
 print(vec)
 ```
 
-A vector can contain four main types of data:
+## Data types
+
+We also need to know a little about data types. These are the main ones:
 
 - Integer: such as 2, 543, 90.
 - Double: numbers other than integers, such as 4.56, 1/33. Doubles are always approximations.
 - Character: a sequence of letters, numbers, punctuation, etc., such as "rainbow", "34265". Character data are always written within quotes, either single or double (we'll always use double for consistency).
 - Logical: data that can take on one of only two values — TRUE or FALSE.
 
-🤔 Why is "34265" of character type? What's a real-world example of this kind of data?
+🤔 Why is "34265" above of the type character? What's a real-world example of this kind of data?
 
-There are two other important ways to store data: 
+There are some other important data types: 
 - `factor`, for categorical variables (here "variable" in statistical sense). A categorical variable is one that can take on a limited, fixed number of values.
-- `date-time` or just `date`
+- `date-time` and `date`
 
 
 ## Functions
@@ -290,9 +293,8 @@ message("The mean of the vector vec2 is ", calculated_mean)
 
 ```
 
-Now that we understand data types, let's load some new data.
 
-🏏 You'll see there are two other data files in the `data` folder: `babynames_2018.csv` and `babynames_1880.csv`. They contain the top 1000 names of babies born in 2018 and 1880, respectively. Load the 2018 data to a dataframe (hint: `read_csv`). Assign the dataframe to a variable named `df_babynames` (You can give a variable any name you like — but it's always a good idea to give variables meaningful, consistent names). 
+🏏 Let's load some new data. You'll see there are two other data files in the `data` folder: `babynames_2018.csv` and `babynames_1880.csv`. They contain the top 1000 names of babies born in 2018 and 1880, respectively. Load the 2018 data to a dataframe (hint: `read_csv`). Assign the dataframe to a variable named `df_babynames` (You can give a variable any name you like — but it's always a good idea to give variables meaningful, consistent names). 
 
 ```{r}
 
@@ -303,12 +305,7 @@ Now that we understand data types, let's load some new data.
 
 ```
 
-## Comments
-todo
-
 # Back to Analysis
-
-## The perils of the wrong data type
 
 Let's take another look at the data types of our dataframe.
 
@@ -320,9 +317,9 @@ Some of the data types don't look right. Let's correct them.
 
 🤔 why is it important to have the correct data type?
 
-But, first, let's learn how to reference a column in a dataframe: first the name of the dataframe, then `$` and then the column name. For example: `df$cancellation_policy` or `df_babynames$Gender`.
+But, first, let's learn how to reference a column in a dataframe: first the name of the dataframe, then `$` and then the column name. For example: `df$cancellation_policy` or `df_babynames$name`.
 
-todo-clearly:: To change data type, we apply the relevant function, such `as.character` or `as.factor`, to a column and then assign the output of the function (values with changed data type) to the same column. 
+To change data type, we apply the relevant function, such `as.character` or `as.factor`, to a column and then assign the output of the function (values with changed data type) to the same column. 
 
 ```{r}
 df$host_id <- as.character(df$host_id)
@@ -342,7 +339,7 @@ Side note: The last function `mdy` is different from the others. Normally, worki
 
 ## Missing values
 
-Some values will almost inevitably be missing in a medium to large dataset. Let's inspect our data for missing values using the function `summary`, which will give us plenty of other relevant information as well.
+Let's inspect our data for missing values using the function `summary`, which will give us plenty of other relevant information as well.
 
 ```{r}
 summary(df)
@@ -362,7 +359,7 @@ In our case, we'll go with the last option.
 
 🤔 Is the last option the best for our dataset? What would be a better alternative?
 
-## The Verbs
+## A Set of Verbs
 
 Finally, we're ready to dive into the data. We'll use six functions — think of them as six verbs — to slice and dice the data in all kinds of ways. These functions come from the `dplyr` package. They are:
 
@@ -397,7 +394,7 @@ Use these *logical operators* to create the conditions:
 
 
 
-Example: Return aataframe with only those rows where the neighborhood is Chelsea.
+Example: Return a dataframe with only those rows where the neighborhood is Chelsea.
 
 ```{r}
 filter(df, neighborhood == "Chelsea")
@@ -450,31 +447,38 @@ There are some variations to this syntax, which come in handy in certain situati
 - If you want all columns except two: `select(name_of_dataframe, -c(column_to_exlude1, column_to_exclue2))`
 - If you want the third through eighth columns: `select(name_of_dataframe, 3:8)`
 
-Example: Return a dataframe with only the listing_url column
+Example: Return a dataframe with only the listing_url column.
+
 ```{r}
 select(df, listing_url)
 ```
 
-Example: Return a dataframe with columns host_response_time, cancellation_policy, and neighborhood
+Example: Return a dataframe with columns host_response_time, cancellation_policy, and neighborhood.
+
 ```{r}
 select(df, host_response_time, cancellation_policy, neighborhood)
 ```
+
 Example: Return a dataframe with second through fourth columns
+
 ```{r}
 select(df, 2:4)
 ```
 
 🏏 Return a dataframe with property_type, room_type, and zip_code columns.
+
 ```{r}
 
 ```
 
 🏏 Return a dataframe with the last 23 columns (sixth through 28th)
+
 ```{r}
 
 ```
 
 🏏 What would be another way of getting the same dataframe?
+
 ```{r}
 
 ```
@@ -487,35 +491,45 @@ Before I introduce the third verb, let's take another detour.
 You can't accomplish a lot with `filter` and `select` in isolation. Let's combine them. 
 
 Here, we're creating a new dataframe `df_expensive` by using `filter` and then we're selecting some columns of interest from that dataframe.
+
 ```{r}
 df_expensive <- filter(df, price > 8000)
 select(df_expensive, price, neighborhood, listing_url)
 ```
+
 🤔 More than $8000 per night? What's going on here? How can we find out more? What should we do with this kind of outliers?
 
 The above code could be written more succinctly by using pipe `%>%`.
+
 ```{r}
 df %>% 
   filter(price > 8000) %>% 
   select(price, neighborhood, listing_url)
 ```
+
 Let's try to understand how the pipe works.
 
 `filter` and `select` both receive a dataframe as their first parameter (this is true for the other four main verbs as well.) Also, you may have noticed that `filter` and `select` return a dataframe (again, it's true for the others as well). Thanks to this, we can use the pipe to string together several verbs to form a complex query.
 
+
 ```{r}
 filter(df, price > 8000)
 ```
+
 is the same as
+
 ```{r}
 df %>% filter(price > 8000)
 ```
 
 Similarly,
+
 ```{r}
 select(df, price, review_scores_rating, listing_url)
 ```
+
 is the same as
+
 ```{r}
 df %>% select(price, review_scores_rating, listing_url)
 ```
@@ -525,6 +539,7 @@ The left side of the pipe is used as the first parameter of the function on the 
 This is how `filter`, `select`, and such functions receive a dataframe, do something to it, return the modified dataframe and passes it on to the next function.
 
 Here's again the piped expression. Make sure you understand what's going on.
+
 ```{r}
 df %>% 
   filter(price > 8000) %>% 
@@ -536,6 +551,7 @@ df %>%
 `arrange` is our third verb. (Note that I'm using verb and function interchangeably.) `arrange` sorts a dataframe based on the values of one or more columns.
 
 Example: Get the same dataframe as the last code chunk. Sort it by price.
+
 ```{r}
 df %>% 
   filter(price > 8000) %>% 
@@ -544,20 +560,25 @@ df %>%
 ```
 
 Example: The same dataframe, but now in descending order of price.
+
 ```{r}
 df %>% 
   filter(price > 8000) %>% 
   select(price, review_scores_rating, listing_url) %>% 
   arrange(desc(price))
 ```
+
 Example: You can add more columns to `arrange`. Now when price is the same, the order will be based on neighborhood.
+
 ```{r}
 df %>% 
   filter(price > 8000) %>% 
   select(price, neighborhood, listing_url) %>% 
   arrange(desc(price), neighborhood)
 ```
+
 🏏 Return the whole dataframe `df`, in descending order of number of bedrooms and where number of bedrooms are equal, descending order of review_scores_rating
+
 ```{r}
 
 ```
@@ -567,6 +588,7 @@ df %>%
 `mutate` creates a new column by modifying one or more existing columns. It's better explained by examples.
 
 Example:
+
 ```{r}
 mutate(df, price_per_person = price / accommodates)
 ```
@@ -583,9 +605,11 @@ mutate(df, price_per_person = price / accommodates)
 `summarize`, as you'd expect, gives some kind of summary (such as mean, median, min, max) of the values of a given column.
 
 Example: What is the total number of people that can stay in NYC Airbnbs?
+
 ```{r}
 summarize(df, total_accommodates = sum(accommodates))
 ```
+
 Here, total_accommodates is a name I've given to the summary number.
 
 The common summary functions are:
@@ -800,3 +824,13 @@ To learn how to do statistics using R, you can watch [this YouTube video](https:
 To learn R's programming concepts (which we didn't cover in detail today), you can watch [this YouTube video](https://www.youtube.com/watch?v=fDRa82lxzaU)
 
 [An Introduction to R](https://cran.r-project.org/doc/manuals/r-release/R-intro.html) is perhaps the most comprehensive introduction. *But it's not the best place to start if you're a complete beginner.*
+
+## Download Cheatsheets
+
+- [RStudio](https://github.com/rstudio/cheatsheets/raw/master/rstudio-ide.pdf)
+- [Data transformation with dplyr](https://github.com/rstudio/cheatsheets/raw/master/data-transformation.pdf)
+- [Work with strings](https://github.com/rstudio/cheatsheets/raw/master/strings.pdf)
+- [Data import](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf)
+- [R Markdown](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)
+- [Data visualization with ggplot2](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
+- 
