@@ -1,20 +1,50 @@
-body {
+#content {
+	max-width: 950px;
+}
+body p {
 	font-family: Georgia, "Segoe UI", Roboto;
 	color: black;
+	font-size:1.1rem;
 }
 
 #table-of-contents h2 {
 	background-color: #E57200;
+	text-align: left;
+	padding: 1em 0 1em 0;
+	font-weight: normal;
 }
 
 #table-of-contents {
 	background-color: #232d4b;
 }
 
-h1, h2, h3, h4 {
-	color: #232d4b;
+h1.title {
+	font-size: 3rem;
+	font-weight: 200;
+	margin-bottom: 0.2rem;
+	border: none;
 }
 
-code, kbd, pre, samp {
-	font-family: Consolas, Cousine, "Roboto Mono";
+h1.subtitle {
+	font-size: 2rem;
+	font-weight: 200;
+	padding-bottom: 1.3rem;
+	border-bottom: #bcbcbc 1px solid;
+	font-variant: small-caps;
+	margin: 0;
+}
+
+h1, h2, h3, h4 {
+	color: #232d4b;
+	margin-top: 1.5em;
+	margin-bottom: 0.35em;
+}
+
+h1 {
+	border-bottom: steelblue 0.1em solid;
+	padding-bottom: 0.3em;
+}
+#content pre code {
+	font-family: Consolas, "Roboto Mono", Cousine;
+	font-size: 1rem;
 }

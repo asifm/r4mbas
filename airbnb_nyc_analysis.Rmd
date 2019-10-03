@@ -1,6 +1,6 @@
 ---
 title: "Beyond Spreadsheets: R for MBAs"
-subtitle: "Looking Into New York City's Airbnb Listings"
+subtitle: "Exploring New York City's Airbnb Listings"
 author: "Asif Mehedi | Batten Institute"
 date: Oct 3, 2019
 output:
@@ -9,8 +9,8 @@ output:
     lightbox: true
     gallery: true
     highlight: tango
-    code_folding: hide
-    css: "./_site/style.css"
+    code_folding: show
+    css: "style.css"
 ---
 
 # Goals
@@ -81,15 +81,13 @@ It's always a good idea to approach a new dataset with a few basic questions. So
 
 Let's take a look at the data. Open the Excel file. Browse around a bit.
 
-*: Can you explain what each column is about?*
+🤔 Can you explain what each column is about?
 
 🤔 Are there any data that you'd like to have but is not there?
 
 🤔 What's the first thing you'd like to find out from these data?
 
 🤔 What do you think about the quality of the data?
-
-
 
 
 # The Context
@@ -106,20 +104,18 @@ For our dataset, we should have a good understanding of the business model of Ai
 
 🤔 How much do I need to know about Airbnb and its business? Is my personal experience with Airbnb enough? What if I don't have any personal experience?
 
-[How Airbnb works](https://www.wikiwand.com/en/Airbnb#/How_it_works)
-
-[Example of an Airbnb listing](https://www.airbnb.com/rooms/2168594?s=frffIXWS)
+- [How Airbnb works](https://www.wikiwand.com/en/Airbnb#/How_it_works)
+- [Example of an Airbnb listing](https://www.airbnb.com/rooms/2168594?s=frffIXWS)
 
 ## New York City
 
 We can start with a map of the city.
 
-![img](https://i.imgur.com/se7fTYT.png)
+![](https://i.imgur.com/se7fTYT.png)
 
-The map shows the relative size and location of the five boroughs of NYC. 
+The map gives us an idea about the relative size and location of the five boroughs of NYC. 
 
 🤔 What else do we know about these boroughs? What about the neighborhoods within the boroughs?
-
 
 
 # Prepare to Analyze
@@ -164,7 +160,7 @@ We'll use the function `read_csv` — which comes from the package `readr` — t
 🤔 What can I do if my data is in a format I'm not familiar with? [hint: Google, package, function] 
 
 ```{r}
-df <- read_csv("airbnb_nyc_data.csv")
+df <- read_csv("data/airbnb_nyc_data.csv")
 ```
 
 The first thing to check is whether the data have been successfully loaded and assigned to the variable (here `df`). We don't see any error — which is a good sign. We can also see the variable `df` in the environment pane (usually to the right of this code editor pane – click on "Environment" if hidden).
@@ -275,7 +271,7 @@ Now we can use this function whenever we need to add 10 to a number. (This is, o
 add10(35)
 ```
 
-Today, we won't write any function, Rather, we'll use functions written by others. Here's an example: the `mean` function, which comes preloaded in R.
+We won't write any function today. Rather, we'll use functions that R — and the packages we loaded — make available to us. Here's an example: the `mean` function, which comes preloaded in R.
 
 ```{r}
 # First let's create a vector
@@ -287,7 +283,8 @@ calculated_mean <- mean(vec2)
 # Then output it with some text description
 message("The mean of the vector vec2 is ", calculated_mean)
 ```
-🏏 calculate the sum, median, and standard deviation (hint: sd) of the vector vec2.
+
+🏏 Calculate the sum, median, and standard deviation (hint: sd) of the vector vec2.
 
 ```{r}
 
@@ -295,7 +292,7 @@ message("The mean of the vector vec2 is ", calculated_mean)
 
 Now that we understand data types, let's load some new data.
 
-🏏 You'll see there's another data file in the folder: "us_babynames.csv". Load the data from this file to a dataframe (hint: `read_csv`). Assign the dataframe to a variable named `df_babynames`. 
+🏏 You'll see there are two other data files in the `data` folder: `babynames_2018.csv` and `babynames_1880.csv`. They contain the top 1000 names of babies born in 2018 and 1880, respectively. Load the 2018 data to a dataframe (hint: `read_csv`). Assign the dataframe to a variable named `df_babynames` (You can give a variable any name you like — but it's always a good idea to give variables meaningful, consistent names). 
 
 ```{r}
 
