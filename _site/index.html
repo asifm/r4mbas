@@ -149,12 +149,12 @@ $(document).ready(function () {
       <li><a href="#load-and-prepare-data">Load and prepare data</a></li>
       </ul></li>
       <li><a href="#detour-programming-concepts">Detour: Programming Concepts</a><ul>
-      <li><a href="#variables-programming">Variables (programming)</a></li>
+      <li><a href="#variable">Variable</a></li>
+      <li><a href="#data-types">Data types</a></li>
       <li><a href="#data-structures">Data structures</a></li>
       <li><a href="#functions">Functions</a></li>
-      <li><a href="#data-structures-1">Data structures</a></li>
       </ul></li>
-      <li><a href="#back-to-analysiquiz-time">Back to Analysi[Quiz Time]</a><ul>
+      <li><a href="#back-to-analysis">Back to Analysis</a><ul>
       <li><a href="#missing-values">Missing values</a></li>
       <li><a href="#a-set-of-verbs">A Set of Verbs</a></li>
       </ul></li>
@@ -170,11 +170,12 @@ $(document).ready(function () {
 <div id="goals" class="section level1">
 <h1>Goals</h1>
 <ul>
-<li>Get a feel for what R is all about</li>
-<li>Get familiar with an analysis workflow that goes beyond Excel</li>
-<li>Learn some powerful techniques of exploring a large-ish dataset</li>
+<li>Understand how a coding-based analysis workflow is different from one based on spreadsheets</li>
+<li>Get familiar with R (a programming language) and RStudio (a desktop program where you write R code)</li>
+<li>Learn some powerful analytic techniques, especially useful for exploring a large-ish dataset</li>
+<li>Learn a few fundamental programming concepts (variable, function, data type)</li>
 </ul>
-<p>We’ll do these by taking a close look at some interesting data: the Airbnb listings in New York City as of August 2019.</p>
+<p>We’ll accomplish these objectives by taking a close look at an interesting dataset, one that contains detailed data on over 35,000 recent (August 2019) Airbnb listings, all in New York City.</p>
 <p>It’s okay if you can’t start using these techniques right away after the workshop. To be comfortable with a tool like R takes some time and practice. Your exposure today to these tools and techniques will likely show you R’s possibilities and motivate you to keep learning.I suggest some learning resources at the end of this document.</p>
 </div>
 <div id="rstudio" class="section level1">
@@ -186,11 +187,10 @@ $(document).ready(function () {
 <p>Before starting our analysis, let’s understand how this document works. (I’m assuming you’re reading this on RStudio.)</p>
 <p>This document is an <em>R Notebook</em>. An R Notebook contains commentary interspersed with code chunks. The code chunks can be run (executed) independently and interactively. The output will appear below the code chunk. R Notebooks are easy to convert to well-formatted final documents as a pdf file, a webpage, or an MS Word file. <a href="http://rmarkdown.rstudio.com/r_notebooks.html">More here</a></p>
 <p>What you’re reading is <em>commentary</em> and what you see below is the container for a code chunk.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="co"># The code goes here</span></a></code></pre></div>
 <p>To run a code chunk, click on the little triangle at the right edge of the code chunk. Or, use the keyboard shortcut <strong>CTRL + SHIFT + ENTER</strong> (Windows) or <strong>CMD + SHIFT + ENTER</strong> (Mac).</p>
 <p>🏏 Run the chunk below and see what happens.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">a &lt;-<span class="st"> </span><span class="dv">5</span> <span class="op">+</span><span class="st"> </span><span class="dv">7</span></a>
-<a class="sourceLine" id="cb2-2" title="2"><span class="kw">print</span>(a)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1">a &lt;-<span class="st"> </span><span class="dv">5</span> <span class="op">+</span><span class="st"> </span><span class="dv">7</span></a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">print</span>(a)</a></code></pre></div>
 <pre><code>## [1] 12</code></pre>
 <p>Do you see some output below the code chunk? This way you can immediately see the result of your code as you work on your analysis.</p>
 <p>(Do you know what’s going on in the code above? We’ll talk about variables and assignments later.)</p>
@@ -243,24 +243,24 @@ $(document).ready(function () {
 <div id="install-and-load-packages" class="section level2">
 <h2>Install and load packages</h2>
 <p>We’ll first install a few packages that we’ll need at different stages of the analysis. This may take a minute or two.</p>
-<p>The symbol <code>#</code> at the start of a line means the line is a comment. These lines are left alone (that is, not executed) when you run a code chunk. You can use comments either to explain your code within a code chunk or to temporarily prevent a line of code from executing.</p>
-<p>If the lines containing <code>install.packages</code> are “commented out,” please remove the <code>#</code>s before running the code chunk.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="co"># For loading data</span></a>
-<a class="sourceLine" id="cb4-2" title="2"><span class="co"># install.packages(&quot;readr&quot;)</span></a>
-<a class="sourceLine" id="cb4-3" title="3"></a>
-<a class="sourceLine" id="cb4-4" title="4"><span class="co"># # For data manipulation (we&#39;ll spend most time with this one)</span></a>
-<a class="sourceLine" id="cb4-5" title="5"><span class="co"># install.packages(&quot;dplyr&quot;)</span></a>
-<a class="sourceLine" id="cb4-6" title="6"></a>
-<a class="sourceLine" id="cb4-7" title="7"><span class="co"># # For visualization</span></a>
-<a class="sourceLine" id="cb4-8" title="8"><span class="co"># install.packages(&quot;ggplot2&quot;)</span></a>
-<a class="sourceLine" id="cb4-9" title="9"></a>
-<a class="sourceLine" id="cb4-10" title="10"><span class="co"># # To work with date and time</span></a>
-<a class="sourceLine" id="cb4-11" title="11"><span class="co"># install.packages(&quot;lubridate&quot;)</span></a></code></pre></div>
+<p>Take a look at the code chunk below and note the <code>#</code>s at the start some lines. The <code>#</code> at the start of a line means the line is a comment. These lines are not executed when you run a code chunk. You can use comments either to explain your code within a code chunk or to temporarily prevent a line of code from executing. The latter is known as “commenting out” a line of code.</p>
+<p>If the lines containing <code>install.packages</code> are “commented out” below, please remove the <code>#</code>s before running the code chunk.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># For loading data</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="co"># install.packages(&quot;readr&quot;)</span></a>
+<a class="sourceLine" id="cb3-3" title="3"></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co"># # For data manipulation (we&#39;ll spend most time with this one)</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="co"># install.packages(&quot;dplyr&quot;)</span></a>
+<a class="sourceLine" id="cb3-6" title="6"></a>
+<a class="sourceLine" id="cb3-7" title="7"><span class="co"># # For visualization</span></a>
+<a class="sourceLine" id="cb3-8" title="8"><span class="co"># install.packages(&quot;ggplot2&quot;)</span></a>
+<a class="sourceLine" id="cb3-9" title="9"></a>
+<a class="sourceLine" id="cb3-10" title="10"><span class="co"># # To work with date and time</span></a>
+<a class="sourceLine" id="cb3-11" title="11"><span class="co"># install.packages(&quot;lubridate&quot;)</span></a></code></pre></div>
 <p>And then we load the packages for our current R session. After these packages are successfully loaded, all the functions in these packages will be available for our use.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">library</span>(readr)</a>
-<a class="sourceLine" id="cb5-2" title="2"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb5-3" title="3"><span class="kw">library</span>(ggplot2)</a>
-<a class="sourceLine" id="cb5-4" title="4"><span class="kw">library</span>(lubridate)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">library</span>(readr)</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb4-4" title="4"><span class="kw">library</span>(lubridate)</a></code></pre></div>
 </div>
 <div id="load-and-prepare-data" class="section level2">
 <h2>Load and prepare data</h2>
@@ -268,7 +268,7 @@ $(document).ready(function () {
 <p>🤔 What’s a CSV file?</p>
 <p>🤔 What are some other formats used for storing data?</p>
 <p>🤔 What can I do if my data is in a format I’m not familiar with? [hint: Google, package, function]</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">df &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/airbnb_nyc_data.csv&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">df &lt;-<span class="st"> </span><span class="kw">read_csv</span>(<span class="st">&quot;data/airbnb_nyc_data.csv&quot;</span>)</a></code></pre></div>
 <pre><code>## Parsed with column specification:
 ## cols(
 ##   .default = col_double(),
@@ -304,56 +304,56 @@ $(document).ready(function () {
 ## ..... ....... ...................... ......... ..........................
 ## See problems(...) for more details.</code></pre>
 <p>The first thing to check is whether the data have been successfully loaded and assigned to the variable (here <code>df</code>). We don’t see any error — which is a good sign. We can also see the variable <code>df</code> in the environment pane (usually to the right of this code editor pane – click on “Environment” if hidden).</p>
-<p>The next thing to check is whether <code>read_csv</code> was able to correctly infer the data type of each variable.</p>
-<p>For a better glimpse, use the function <code>glimpse</code>.</p>
+<p>Next you should check whether <code>read_csv</code> was able to correctly infer the data type of each column.</p>
+<p>For a better glimpse at the data, use the function <code>glimpse</code>.</p>
 <p>🤔 How am I supposed to know what functions are out there?</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">glimpse</span>(df)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">glimpse</span>(df)</a></code></pre></div>
 <pre><code>## Observations: 37,762
 ## Variables: 44
-## $ id                          &lt;dbl&gt; 1925519, 4244476, 6031895, 6887405...
-## $ listing_url                 &lt;chr&gt; &quot;https://www.airbnb.com/rooms/1925...
-## $ name                        &lt;chr&gt; &quot;Sublet: $490/Wk&quot;, &quot;Sunny and Funk...
-## $ description                 &lt;chr&gt; &quot;$490/week. Huge 1 bedroom / 2bdr ...
-## $ host_id                     &lt;dbl&gt; 2765870, 782008, 6396863, 11081099...
-## $ host_name                   &lt;chr&gt; &quot;Amarie2131&quot;, &quot;Lori&quot;, &quot;Tianhui&quot;, &quot;...
-## $ host_since                  &lt;chr&gt; &quot;6/27/2012&quot;, &quot;7/5/2011&quot;, &quot;5/14/201...
-## $ host_response_time          &lt;chr&gt; &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;,...
-## $ host_response_rate          &lt;chr&gt; &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;,...
-## $ host_is_superhost           &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE,...
-## $ host_total_listings_count   &lt;dbl&gt; 1, 1, 1, 2, 5, 1, 1, 1, 1, 1, 1, 3...
-## $ host_verifications          &lt;chr&gt; &quot;[&#39;email&#39;, &#39;phone&#39;, &#39;facebook&#39;, &#39;r...
-## $ host_identity_verified      &lt;lgl&gt; TRUE, TRUE, FALSE, TRUE, TRUE, TRU...
-## $ neighborhood                &lt;chr&gt; &quot;Lower East Side&quot;, &quot;Greenpoint&quot;, &quot;...
-## $ borough                     &lt;chr&gt; &quot;Manhattan&quot;, &quot;Brooklyn&quot;, &quot;Manhatta...
-## $ zipcode                     &lt;dbl&gt; 10002, 11222, 10019, 10031, 11206,...
-## $ property_type               &lt;chr&gt; &quot;Apartment&quot;, &quot;Apartment&quot;, &quot;Apartme...
-## $ accommodates                &lt;dbl&gt; 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 4...
-## $ bathrooms                   &lt;dbl&gt; 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0,...
-## $ bedrooms                    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1...
-## $ beds                        &lt;dbl&gt; 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2...
-## $ bed_type                    &lt;chr&gt; &quot;Real Bed&quot;, &quot;Real Bed&quot;, &quot;Airbed&quot;, ...
-## $ price                       &lt;dbl&gt; 80, 75, 60, 50, 50, 50, 85, 80, 35...
-## $ security_deposit            &lt;dbl&gt; NA, NA, 400, 700, NA, NA, NA, NA, ...
-## $ cleaning_fee                &lt;dbl&gt; NA, NA, NA, 25, NA, NA, NA, NA, NA...
-## $ guests_included             &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1...
-## $ extra_people                &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ minimum_nights              &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 2...
-## $ calendar_updated            &lt;chr&gt; &quot;43 months ago&quot;, &quot;24 months ago&quot;, ...
-## $ has_availability            &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE...
-## $ availability_365            &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 87, 0, ...
-## $ number_of_reviews           &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1...
-## $ number_of_reviews_ltm       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ review_scores_rating        &lt;dbl&gt; 20, 20, 20, 20, 20, 20, 20, 20, 20...
-## $ review_scores_accuracy      &lt;dbl&gt; 6, 2, 6, 6, 2, 2, 2, NA, 2, 8, 10,...
-## $ review_scores_cleanliness   &lt;dbl&gt; 2, 2, 2, 2, 2, 8, 2, NA, 2, 8, 2, ...
-## $ review_scores_checkin       &lt;dbl&gt; 6, 10, 2, 10, 8, 4, 8, NA, 2, 4, 1...
-## $ review_scores_communication &lt;dbl&gt; 6, 10, 8, 10, 8, 6, 6, NA, 6, 2, 1...
-## $ review_scores_location      &lt;dbl&gt; 10, 10, 10, 8, 8, 8, 10, NA, 4, 4,...
-## $ review_scores_value         &lt;dbl&gt; 6, 2, 4, 4, 2, 4, 2, NA, 4, 4, 4, ...
-## $ instant_bookable            &lt;lgl&gt; FALSE, TRUE, FALSE, FALSE, FALSE, ...
-## $ is_business_travel_ready    &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE,...
-## $ cancellation_policy         &lt;chr&gt; &quot;flexible&quot;, &quot;flexible&quot;, &quot;moderate&quot;...
-## $ reviews_per_month           &lt;dbl&gt; 0.02, 0.02, 0.02, 0.02, 0.02, 0.02...</code></pre>
+## $ id                          [3m[90m&lt;dbl&gt;[39m[23m 1925519, 4244476, 6031895, 6887405...
+## $ listing_url                 [3m[90m&lt;chr&gt;[39m[23m &quot;https://www.airbnb.com/rooms/1925...
+## $ name                        [3m[90m&lt;chr&gt;[39m[23m &quot;Sublet: $490/Wk&quot;, &quot;Sunny and Funk...
+## $ description                 [3m[90m&lt;chr&gt;[39m[23m &quot;$490/week. Huge 1 bedroom / 2bdr ...
+## $ host_id                     [3m[90m&lt;dbl&gt;[39m[23m 2765870, 782008, 6396863, 11081099...
+## $ host_name                   [3m[90m&lt;chr&gt;[39m[23m &quot;Amarie2131&quot;, &quot;Lori&quot;, &quot;Tianhui&quot;, &quot;...
+## $ host_since                  [3m[90m&lt;chr&gt;[39m[23m &quot;6/27/2012&quot;, &quot;7/5/2011&quot;, &quot;5/14/201...
+## $ host_response_time          [3m[90m&lt;chr&gt;[39m[23m &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;,...
+## $ host_response_rate          [3m[90m&lt;chr&gt;[39m[23m &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;,...
+## $ host_is_superhost           [3m[90m&lt;lgl&gt;[39m[23m FALSE, FALSE, FALSE, FALSE, FALSE,...
+## $ host_total_listings_count   [3m[90m&lt;dbl&gt;[39m[23m 1, 1, 1, 2, 5, 1, 1, 1, 1, 1, 1, 3...
+## $ host_verifications          [3m[90m&lt;chr&gt;[39m[23m &quot;[&#39;email&#39;, &#39;phone&#39;, &#39;facebook&#39;, &#39;r...
+## $ host_identity_verified      [3m[90m&lt;lgl&gt;[39m[23m TRUE, TRUE, FALSE, TRUE, TRUE, TRU...
+## $ neighborhood                [3m[90m&lt;chr&gt;[39m[23m &quot;Lower East Side&quot;, &quot;Greenpoint&quot;, &quot;...
+## $ borough                     [3m[90m&lt;chr&gt;[39m[23m &quot;Manhattan&quot;, &quot;Brooklyn&quot;, &quot;Manhatta...
+## $ zipcode                     [3m[90m&lt;dbl&gt;[39m[23m 10002, 11222, 10019, 10031, 11206,...
+## $ property_type               [3m[90m&lt;chr&gt;[39m[23m &quot;Apartment&quot;, &quot;Apartment&quot;, &quot;Apartme...
+## $ accommodates                [3m[90m&lt;dbl&gt;[39m[23m 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 4...
+## $ bathrooms                   [3m[90m&lt;dbl&gt;[39m[23m 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0,...
+## $ bedrooms                    [3m[90m&lt;dbl&gt;[39m[23m 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1...
+## $ beds                        [3m[90m&lt;dbl&gt;[39m[23m 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2...
+## $ bed_type                    [3m[90m&lt;chr&gt;[39m[23m &quot;Real Bed&quot;, &quot;Real Bed&quot;, &quot;Airbed&quot;, ...
+## $ price                       [3m[90m&lt;dbl&gt;[39m[23m 80, 75, 60, 50, 50, 50, 85, 80, 35...
+## $ security_deposit            [3m[90m&lt;dbl&gt;[39m[23m NA, NA, 400, 700, NA, NA, NA, NA, ...
+## $ cleaning_fee                [3m[90m&lt;dbl&gt;[39m[23m NA, NA, NA, 25, NA, NA, NA, NA, NA...
+## $ guests_included             [3m[90m&lt;dbl&gt;[39m[23m 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1...
+## $ extra_people                [3m[90m&lt;dbl&gt;[39m[23m 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ minimum_nights              [3m[90m&lt;dbl&gt;[39m[23m 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 2...
+## $ calendar_updated            [3m[90m&lt;chr&gt;[39m[23m &quot;43 months ago&quot;, &quot;24 months ago&quot;, ...
+## $ has_availability            [3m[90m&lt;lgl&gt;[39m[23m TRUE, TRUE, TRUE, TRUE, TRUE, TRUE...
+## $ availability_365            [3m[90m&lt;dbl&gt;[39m[23m 0, 0, 0, 0, 0, 0, 0, 0, 0, 87, 0, ...
+## $ number_of_reviews           [3m[90m&lt;dbl&gt;[39m[23m 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1...
+## $ number_of_reviews_ltm       [3m[90m&lt;dbl&gt;[39m[23m 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ review_scores_rating        [3m[90m&lt;dbl&gt;[39m[23m 20, 20, 20, 20, 20, 20, 20, 20, 20...
+## $ review_scores_accuracy      [3m[90m&lt;dbl&gt;[39m[23m 6, 2, 6, 6, 2, 2, 2, NA, 2, 8, 10,...
+## $ review_scores_cleanliness   [3m[90m&lt;dbl&gt;[39m[23m 2, 2, 2, 2, 2, 8, 2, NA, 2, 8, 2, ...
+## $ review_scores_checkin       [3m[90m&lt;dbl&gt;[39m[23m 6, 10, 2, 10, 8, 4, 8, NA, 2, 4, 1...
+## $ review_scores_communication [3m[90m&lt;dbl&gt;[39m[23m 6, 10, 8, 10, 8, 6, 6, NA, 6, 2, 1...
+## $ review_scores_location      [3m[90m&lt;dbl&gt;[39m[23m 10, 10, 10, 8, 8, 8, 10, NA, 4, 4,...
+## $ review_scores_value         [3m[90m&lt;dbl&gt;[39m[23m 6, 2, 4, 4, 2, 4, 2, NA, 4, 4, 4, ...
+## $ instant_bookable            [3m[90m&lt;lgl&gt;[39m[23m FALSE, TRUE, FALSE, FALSE, FALSE, ...
+## $ is_business_travel_ready    [3m[90m&lt;lgl&gt;[39m[23m FALSE, FALSE, FALSE, FALSE, FALSE,...
+## $ cancellation_policy         [3m[90m&lt;chr&gt;[39m[23m &quot;flexible&quot;, &quot;flexible&quot;, &quot;moderate&quot;...
+## $ reviews_per_month           [3m[90m&lt;dbl&gt;[39m[23m 0.02, 0.02, 0.02, 0.02, 0.02, 0.02...</code></pre>
 <p>What you see within the angular brackets <code>&lt;...&gt;</code> next to each column name is the data type of that column.</p>
 <p>But what are data types? And why are they important?</p>
 <p>What exactly is a variable in programming?</p>
@@ -363,27 +363,27 @@ $(document).ready(function () {
 </div>
 <div id="detour-programming-concepts" class="section level1">
 <h1>Detour: Programming Concepts</h1>
-<div id="variables-programming" class="section level2">
-<h2>Variables (programming)</h2>
+<div id="variable" class="section level2">
+<h2>Variable</h2>
 <p>In programming, a variable stores some value. Our code can then reference the name of the variable to do something with it.</p>
 <p>We use a left-facing arrow to assign a value to a variable. The arrow looks like this: <code>&lt;-</code> (the less-than sign followed by a hyphen).</p>
 <p>For example, in the code below, <code>foo</code> and <code>bar</code> are variable names. We assigned the values <code>43</code> and <code>"kitten"</code> to <code>foo</code> and <code>bar</code> respectively. You can read them as <code>foo</code> gets <code>43</code> and <code>bar</code> gets <code>"kitten"</code>.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">foo &lt;-<span class="st"> </span><span class="dv">43</span></a>
-<a class="sourceLine" id="cb12-2" title="2">bar &lt;-<span class="st"> &quot;kitten&quot;</span></a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">foo &lt;-<span class="st"> </span><span class="dv">43</span></a>
+<a class="sourceLine" id="cb11-2" title="2">bar &lt;-<span class="st"> &quot;kitten&quot;</span></a></code></pre></div>
 <p>Let’s do something with these variables.</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co"># Multiply foo by 10</span></a>
-<a class="sourceLine" id="cb13-2" title="2"><span class="kw">print</span>(foo <span class="op">*</span><span class="st"> </span><span class="dv">10</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1"><span class="co"># Multiply foo by 10</span></a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="kw">print</span>(foo <span class="op">*</span><span class="st"> </span><span class="dv">10</span>)</a></code></pre></div>
 <pre><code>## [1] 430</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># Just see the value of bar</span></a>
-<a class="sourceLine" id="cb15-2" title="2"><span class="kw">print</span>(bar)</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="co"># Just see the value of bar</span></a>
+<a class="sourceLine" id="cb14-2" title="2"><span class="kw">print</span>(bar)</a></code></pre></div>
 <pre><code>## [1] &quot;kitten&quot;</code></pre>
-<p>Important: The word <code>variable</code> can be ambiguous. You may be familiar with the term as used in statistics. For example, if some data is about people, some variables could be age, sex, income and address. The names of the columns of a dataframe are variables in the statistical sense. Usually, the context would clarify which meaning is intended.</p>
+<p>Important: The word <code>variable</code> can be ambiguous. You may be familiar with the term as used in statistics. For example, if you have some data about people, some variables there could be age, sex, income and address. The names of the columns of a dataframe are variables in this sense. Usually, the context would clarify which meaning is intended.</p>
 <p>Tip: Give short descriptive names to your variables. This will make the code easy to follow.</p>
 <p>🏏 A room is 11 yards long and 7.5 yards wide. Assign these values to <code>width</code> and <code>length</code> variables and then calculate the <code>area</code> of the room. You can, of course, give different names to these variables if you wish.</p>
 </div>
-<div id="data-structures" class="section level2">
-<h2>Data structures</h2>
-<p>`o need to know a little about data types. These are the main ones:</p>
+<div id="data-types" class="section level2">
+<h2>Data types</h2>
+<p>We also need to know a little about data types. These are the main ones:</p>
 <ul>
 <li>Integer: such as 2, 543, 90.</li>
 <li>Double: numbers other than integers, such as 4.56, 1/33. Doubles are always approximations.</li>
@@ -393,117 +393,118 @@ $(document).ready(function () {
 <p>🤔 Why is “34265” above of the type character? What’s a real-world example of this kind of data?</p>
 <p>There are some other important data types: - <code>factor</code>, for categorical variables (here “variable” in statistical sense). A categorical variable is one that can take on a limited, fixed number of values. - <code>date-time</code> and <code>date</code></p>
 </div>
+<div id="data-structures" class="section level2">
+<h2>Data structures</h2>
+<p><code>vector</code>, <code>list</code>, <code>matrix</code>, and <code>dataframe</code> are the main data-structures for storing data in R.</p>
+<p>Think of a vector as simply a collection of data elements, where each element is of the same data type.</p>
+<p>This is how you create a vector: <code>c(element1, element2, element3, ...)</code></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1">vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>)</a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="kw">print</span>(vec)</a></code></pre></div>
+<pre><code>## [1]  3  5 10 20</code></pre>
+</div>
 <div id="functions" class="section level2">
 <h2>Functions</h2>
-</div>
-<div id="data-structures-1" class="section level2">
-<h2>Data structures</h2>
-<p><code>vector</code>, <code>list</code>, <code>matrix</code>, and <code>dataframe</code> are some of the main data-structures for storing data in R.</p>
-<p>Think of a vector as simply a sequence of data. For example, a column in a data table is a vector. This is how you create a vector: <code>c(element1, element2, element3, ...)</code></p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1">vec &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">10</span>, <span class="dv">20</span>)</a>
-<a class="sourceLine" id="cb17-2" title="2"><span class="kw">print</span>(vec)</a></code></pre></div>
-<pre><code>## [1]  3  5 10 20</code></pre>
-<p>You’re familiar with Excel functions, such as <code>sum()</code> or <code>average()</code>. The concept of functions in a programming language is no different. You give some values (called parameters) to a function. The function does something with the values and returns a new value. So <code>sum(3, 6, 1)</code> returns 10. Here <code>sum</code> is the name of the function, 3, 6, 1 are parameters, and 10 is the returned value.</p>
+<p>You’re likely familiar with Excel functions, such as <code>sum()</code> or <code>average()</code>. The concept of functions in a programming language is no different. You give some values (called parameters) to a function. The function does something with the values and returns a new value. So <code>sum(3, 6, 1)</code> returns 10. Here <code>sum</code> is the name of the function, 3, 6, 1 are parameters, and 10 is the returned value.</p>
 <p>Most of the times, you’ll use functions written by other people. But it’s not too difficult to write your own functions. Here’s a simple one. All it does is add 10 to a given number and then return the total.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="cf">function</span>(num){</a>
-<a class="sourceLine" id="cb19-2" title="2">  new_value &lt;-<span class="st">  </span>num <span class="op">+</span><span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb19-3" title="3">  new_value</a>
-<a class="sourceLine" id="cb19-4" title="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="cf">function</span>(num){</a>
+<a class="sourceLine" id="cb18-2" title="2">  new_value &lt;-<span class="st">  </span>num <span class="op">+</span><span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb18-3" title="3">  new_value</a>
+<a class="sourceLine" id="cb18-4" title="4">}</a></code></pre></div>
 <pre><code>## function(num){
 ##   new_value &lt;-  num + 10
 ##   new_value
 ## }</code></pre>
 <p>But we can’t really use the function yet. We need to give it a name. Let’s go with <code>add10</code>.</p>
-<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">add10 &lt;-<span class="st"> </span><span class="cf">function</span>(num){</a>
-<a class="sourceLine" id="cb21-2" title="2">  new_value &lt;-<span class="st">  </span>num <span class="op">+</span><span class="st"> </span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb21-3" title="3">  new_value</a>
-<a class="sourceLine" id="cb21-4" title="4">}</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1">add10 &lt;-<span class="st"> </span><span class="cf">function</span>(num){</a>
+<a class="sourceLine" id="cb20-2" title="2">  new_value &lt;-<span class="st">  </span>num <span class="op">+</span><span class="st"> </span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb20-3" title="3">  new_value</a>
+<a class="sourceLine" id="cb20-4" title="4">}</a></code></pre></div>
 <p>Now we can use this function whenever we need to add 10 to a number. (This is, of course, a toy example. In practice, a function would do much more work.)</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="co"># Add 10 to 35</span></a>
-<a class="sourceLine" id="cb22-2" title="2"><span class="kw">add10</span>(<span class="dv">35</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1"><span class="co"># Add 10 to 35</span></a>
+<a class="sourceLine" id="cb21-2" title="2"><span class="kw">add10</span>(<span class="dv">35</span>)</a></code></pre></div>
 <pre><code>## [1] 45</code></pre>
 <p>We won’t write any function today. Rather, we’ll use functions that R — and the packages we loaded — make available to us. Here’s an example: the <code>mean</code> function, which comes preloaded in R.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="co"># First let&#39;s create a vector</span></a>
-<a class="sourceLine" id="cb24-2" title="2">vec2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">23</span>, <span class="dv">53</span>, <span class="dv">11</span>, <span class="dv">34</span>, <span class="dv">87</span>, <span class="dv">100</span>, <span class="dv">5</span>, <span class="dv">12</span>, <span class="dv">66</span>, <span class="dv">9</span>, <span class="dv">87</span>, <span class="dv">110</span>, <span class="dv">20</span>, <span class="dv">33</span>, <span class="dv">54</span>, <span class="dv">43</span>, <span class="dv">76</span>)</a>
-<a class="sourceLine" id="cb24-3" title="3"></a>
-<a class="sourceLine" id="cb24-4" title="4"><span class="co"># Let&#39;s calculate the mean of the vector</span></a>
-<a class="sourceLine" id="cb24-5" title="5">calculated_mean &lt;-<span class="st"> </span><span class="kw">mean</span>(vec2)</a>
-<a class="sourceLine" id="cb24-6" title="6"></a>
-<a class="sourceLine" id="cb24-7" title="7"><span class="co"># Then output it with some text description</span></a>
-<a class="sourceLine" id="cb24-8" title="8"><span class="kw">message</span>(<span class="st">&quot;The mean of the vector vec2 is &quot;</span>, calculated_mean)</a></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="co"># First let&#39;s create a vector</span></a>
+<a class="sourceLine" id="cb23-2" title="2">vec2 &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">23</span>, <span class="dv">53</span>, <span class="dv">11</span>, <span class="dv">34</span>, <span class="dv">87</span>, <span class="dv">100</span>, <span class="dv">5</span>, <span class="dv">12</span>, <span class="dv">66</span>, <span class="dv">9</span>, <span class="dv">87</span>, <span class="dv">110</span>, <span class="dv">20</span>, <span class="dv">33</span>, <span class="dv">54</span>, <span class="dv">43</span>, <span class="dv">76</span>)</a>
+<a class="sourceLine" id="cb23-3" title="3"></a>
+<a class="sourceLine" id="cb23-4" title="4"><span class="co"># Let&#39;s calculate the mean of the vector</span></a>
+<a class="sourceLine" id="cb23-5" title="5">calculated_mean &lt;-<span class="st"> </span><span class="kw">mean</span>(vec2)</a>
+<a class="sourceLine" id="cb23-6" title="6"></a>
+<a class="sourceLine" id="cb23-7" title="7"><span class="co"># Then output it with some text description</span></a>
+<a class="sourceLine" id="cb23-8" title="8"><span class="kw">message</span>(<span class="st">&quot;The mean of the vector vec2 is &quot;</span>, calculated_mean)</a></code></pre></div>
 <pre><code>## The mean of the vector vec2 is 48.4117647058824</code></pre>
-<p>🏏 Calculate the sum, median, and standard deviation (hint: sd) of the vector vec2.</p>
+<p>🏏 Calculate the sum, median, and standard deviation (hint: <code>sd</code>) of the vector <code>vec2</code>.</p>
 <p>🏏 Let’s load some new data. You’ll see there are two other data files in the <code>data</code> folder: <code>babynames_2018.csv</code> and <code>babynames_1880.csv</code>. They contain the top 1000 names of babies born in 2018 and 1880, respectively. Load the 2018 data to a dataframe (hint: <code>read_csv</code>). Assign the dataframe to a variable named <code>df_babynames</code> (You can give a variable any name you like — but it’s always a good idea to give variables meaningful, consistent names).</p>
 <p>🏏 Now take a look at the dataframe’s data types. (hint: <code>glimpse</code>)</p>
+<p>[Quiz Time]</p>
 </div>
 </div>
-<div id="back-to-analysiquiz-time" class="section level1">
-<h1>Back to Analysi[Quiz Time]</h1>
-<p>s</p>
+<div id="back-to-analysis" class="section level1">
+<h1>Back to Analysis</h1>
 <p>Let’s take another look at the data types of our dataframe.</p>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">glimpse</span>(df)</a></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">glimpse</span>(df)</a></code></pre></div>
 <pre><code>## Observations: 37,762
 ## Variables: 44
-## $ id                          &lt;dbl&gt; 1925519, 4244476, 6031895, 6887405...
-## $ listing_url                 &lt;chr&gt; &quot;https://www.airbnb.com/rooms/1925...
-## $ name                        &lt;chr&gt; &quot;Sublet: $490/Wk&quot;, &quot;Sunny and Funk...
-## $ description                 &lt;chr&gt; &quot;$490/week. Huge 1 bedroom / 2bdr ...
-## $ host_id                     &lt;dbl&gt; 2765870, 782008, 6396863, 11081099...
-## $ host_name                   &lt;chr&gt; &quot;Amarie2131&quot;, &quot;Lori&quot;, &quot;Tianhui&quot;, &quot;...
-## $ host_since                  &lt;chr&gt; &quot;6/27/2012&quot;, &quot;7/5/2011&quot;, &quot;5/14/201...
-## $ host_response_time          &lt;chr&gt; &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;,...
-## $ host_response_rate          &lt;chr&gt; &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;,...
-## $ host_is_superhost           &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE,...
-## $ host_total_listings_count   &lt;dbl&gt; 1, 1, 1, 2, 5, 1, 1, 1, 1, 1, 1, 3...
-## $ host_verifications          &lt;chr&gt; &quot;[&#39;email&#39;, &#39;phone&#39;, &#39;facebook&#39;, &#39;r...
-## $ host_identity_verified      &lt;lgl&gt; TRUE, TRUE, FALSE, TRUE, TRUE, TRU...
-## $ neighborhood                &lt;chr&gt; &quot;Lower East Side&quot;, &quot;Greenpoint&quot;, &quot;...
-## $ borough                     &lt;chr&gt; &quot;Manhattan&quot;, &quot;Brooklyn&quot;, &quot;Manhatta...
-## $ zipcode                     &lt;dbl&gt; 10002, 11222, 10019, 10031, 11206,...
-## $ property_type               &lt;chr&gt; &quot;Apartment&quot;, &quot;Apartment&quot;, &quot;Apartme...
-## $ accommodates                &lt;dbl&gt; 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 4...
-## $ bathrooms                   &lt;dbl&gt; 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0,...
-## $ bedrooms                    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1...
-## $ beds                        &lt;dbl&gt; 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2...
-## $ bed_type                    &lt;chr&gt; &quot;Real Bed&quot;, &quot;Real Bed&quot;, &quot;Airbed&quot;, ...
-## $ price                       &lt;dbl&gt; 80, 75, 60, 50, 50, 50, 85, 80, 35...
-## $ security_deposit            &lt;dbl&gt; NA, NA, 400, 700, NA, NA, NA, NA, ...
-## $ cleaning_fee                &lt;dbl&gt; NA, NA, NA, 25, NA, NA, NA, NA, NA...
-## $ guests_included             &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1...
-## $ extra_people                &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ minimum_nights              &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 2...
-## $ calendar_updated            &lt;chr&gt; &quot;43 months ago&quot;, &quot;24 months ago&quot;, ...
-## $ has_availability            &lt;lgl&gt; TRUE, TRUE, TRUE, TRUE, TRUE, TRUE...
-## $ availability_365            &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 87, 0, ...
-## $ number_of_reviews           &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1...
-## $ number_of_reviews_ltm       &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
-## $ review_scores_rating        &lt;dbl&gt; 20, 20, 20, 20, 20, 20, 20, 20, 20...
-## $ review_scores_accuracy      &lt;dbl&gt; 6, 2, 6, 6, 2, 2, 2, NA, 2, 8, 10,...
-## $ review_scores_cleanliness   &lt;dbl&gt; 2, 2, 2, 2, 2, 8, 2, NA, 2, 8, 2, ...
-## $ review_scores_checkin       &lt;dbl&gt; 6, 10, 2, 10, 8, 4, 8, NA, 2, 4, 1...
-## $ review_scores_communication &lt;dbl&gt; 6, 10, 8, 10, 8, 6, 6, NA, 6, 2, 1...
-## $ review_scores_location      &lt;dbl&gt; 10, 10, 10, 8, 8, 8, 10, NA, 4, 4,...
-## $ review_scores_value         &lt;dbl&gt; 6, 2, 4, 4, 2, 4, 2, NA, 4, 4, 4, ...
-## $ instant_bookable            &lt;lgl&gt; FALSE, TRUE, FALSE, FALSE, FALSE, ...
-## $ is_business_travel_ready    &lt;lgl&gt; FALSE, FALSE, FALSE, FALSE, FALSE,...
-## $ cancellation_policy         &lt;chr&gt; &quot;flexible&quot;, &quot;flexible&quot;, &quot;moderate&quot;...
-## $ reviews_per_month           &lt;dbl&gt; 0.02, 0.02, 0.02, 0.02, 0.02, 0.02...</code></pre>
+## $ id                          [3m[90m&lt;dbl&gt;[39m[23m 1925519, 4244476, 6031895, 6887405...
+## $ listing_url                 [3m[90m&lt;chr&gt;[39m[23m &quot;https://www.airbnb.com/rooms/1925...
+## $ name                        [3m[90m&lt;chr&gt;[39m[23m &quot;Sublet: $490/Wk&quot;, &quot;Sunny and Funk...
+## $ description                 [3m[90m&lt;chr&gt;[39m[23m &quot;$490/week. Huge 1 bedroom / 2bdr ...
+## $ host_id                     [3m[90m&lt;dbl&gt;[39m[23m 2765870, 782008, 6396863, 11081099...
+## $ host_name                   [3m[90m&lt;chr&gt;[39m[23m &quot;Amarie2131&quot;, &quot;Lori&quot;, &quot;Tianhui&quot;, &quot;...
+## $ host_since                  [3m[90m&lt;chr&gt;[39m[23m &quot;6/27/2012&quot;, &quot;7/5/2011&quot;, &quot;5/14/201...
+## $ host_response_time          [3m[90m&lt;chr&gt;[39m[23m &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;,...
+## $ host_response_rate          [3m[90m&lt;chr&gt;[39m[23m &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;, &quot;N/A&quot;,...
+## $ host_is_superhost           [3m[90m&lt;lgl&gt;[39m[23m FALSE, FALSE, FALSE, FALSE, FALSE,...
+## $ host_total_listings_count   [3m[90m&lt;dbl&gt;[39m[23m 1, 1, 1, 2, 5, 1, 1, 1, 1, 1, 1, 3...
+## $ host_verifications          [3m[90m&lt;chr&gt;[39m[23m &quot;[&#39;email&#39;, &#39;phone&#39;, &#39;facebook&#39;, &#39;r...
+## $ host_identity_verified      [3m[90m&lt;lgl&gt;[39m[23m TRUE, TRUE, FALSE, TRUE, TRUE, TRU...
+## $ neighborhood                [3m[90m&lt;chr&gt;[39m[23m &quot;Lower East Side&quot;, &quot;Greenpoint&quot;, &quot;...
+## $ borough                     [3m[90m&lt;chr&gt;[39m[23m &quot;Manhattan&quot;, &quot;Brooklyn&quot;, &quot;Manhatta...
+## $ zipcode                     [3m[90m&lt;dbl&gt;[39m[23m 10002, 11222, 10019, 10031, 11206,...
+## $ property_type               [3m[90m&lt;chr&gt;[39m[23m &quot;Apartment&quot;, &quot;Apartment&quot;, &quot;Apartme...
+## $ accommodates                [3m[90m&lt;dbl&gt;[39m[23m 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 4...
+## $ bathrooms                   [3m[90m&lt;dbl&gt;[39m[23m 1.0, 1.0, 1.0, 1.0, 2.0, 1.0, 1.0,...
+## $ bedrooms                    [3m[90m&lt;dbl&gt;[39m[23m 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1...
+## $ beds                        [3m[90m&lt;dbl&gt;[39m[23m 1, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2...
+## $ bed_type                    [3m[90m&lt;chr&gt;[39m[23m &quot;Real Bed&quot;, &quot;Real Bed&quot;, &quot;Airbed&quot;, ...
+## $ price                       [3m[90m&lt;dbl&gt;[39m[23m 80, 75, 60, 50, 50, 50, 85, 80, 35...
+## $ security_deposit            [3m[90m&lt;dbl&gt;[39m[23m NA, NA, 400, 700, NA, NA, NA, NA, ...
+## $ cleaning_fee                [3m[90m&lt;dbl&gt;[39m[23m NA, NA, NA, 25, NA, NA, NA, NA, NA...
+## $ guests_included             [3m[90m&lt;dbl&gt;[39m[23m 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1...
+## $ extra_people                [3m[90m&lt;dbl&gt;[39m[23m 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ minimum_nights              [3m[90m&lt;dbl&gt;[39m[23m 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 7, 2...
+## $ calendar_updated            [3m[90m&lt;chr&gt;[39m[23m &quot;43 months ago&quot;, &quot;24 months ago&quot;, ...
+## $ has_availability            [3m[90m&lt;lgl&gt;[39m[23m TRUE, TRUE, TRUE, TRUE, TRUE, TRUE...
+## $ availability_365            [3m[90m&lt;dbl&gt;[39m[23m 0, 0, 0, 0, 0, 0, 0, 0, 0, 87, 0, ...
+## $ number_of_reviews           [3m[90m&lt;dbl&gt;[39m[23m 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1...
+## $ number_of_reviews_ltm       [3m[90m&lt;dbl&gt;[39m[23m 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0...
+## $ review_scores_rating        [3m[90m&lt;dbl&gt;[39m[23m 20, 20, 20, 20, 20, 20, 20, 20, 20...
+## $ review_scores_accuracy      [3m[90m&lt;dbl&gt;[39m[23m 6, 2, 6, 6, 2, 2, 2, NA, 2, 8, 10,...
+## $ review_scores_cleanliness   [3m[90m&lt;dbl&gt;[39m[23m 2, 2, 2, 2, 2, 8, 2, NA, 2, 8, 2, ...
+## $ review_scores_checkin       [3m[90m&lt;dbl&gt;[39m[23m 6, 10, 2, 10, 8, 4, 8, NA, 2, 4, 1...
+## $ review_scores_communication [3m[90m&lt;dbl&gt;[39m[23m 6, 10, 8, 10, 8, 6, 6, NA, 6, 2, 1...
+## $ review_scores_location      [3m[90m&lt;dbl&gt;[39m[23m 10, 10, 10, 8, 8, 8, 10, NA, 4, 4,...
+## $ review_scores_value         [3m[90m&lt;dbl&gt;[39m[23m 6, 2, 4, 4, 2, 4, 2, NA, 4, 4, 4, ...
+## $ instant_bookable            [3m[90m&lt;lgl&gt;[39m[23m FALSE, TRUE, FALSE, FALSE, FALSE, ...
+## $ is_business_travel_ready    [3m[90m&lt;lgl&gt;[39m[23m FALSE, FALSE, FALSE, FALSE, FALSE,...
+## $ cancellation_policy         [3m[90m&lt;chr&gt;[39m[23m &quot;flexible&quot;, &quot;flexible&quot;, &quot;moderate&quot;...
+## $ reviews_per_month           [3m[90m&lt;dbl&gt;[39m[23m 0.02, 0.02, 0.02, 0.02, 0.02, 0.02...</code></pre>
 <p>Some of the data types don’t look right. Let’s correct them.</p>
 <p>🤔 why is it important to have the correct data type?</p>
 <p>But, first, let’s learn how to reference a column in a dataframe: first the name of the dataframe, then <code>$</code> and then the column name. For example: <code>df$cancellation_policy</code> or <code>df_babynames$name</code>.</p>
 <p>To change data type, we apply the relevant function, such <code>as.character</code> or <code>as.factor</code>, to a column and then assign the output of the function (values with changed data type) to the same column.</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">df<span class="op">$</span>host_id &lt;-<span class="st"> </span><span class="kw">as.character</span>(df<span class="op">$</span>host_id)</a>
-<a class="sourceLine" id="cb28-2" title="2">df<span class="op">$</span>host_response_rate &lt;-<span class="st"> </span><span class="kw">as.double</span>(df<span class="op">$</span>host_response_rate)</a></code></pre></div>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">df<span class="op">$</span>host_id &lt;-<span class="st"> </span><span class="kw">as.character</span>(df<span class="op">$</span>host_id)</a>
+<a class="sourceLine" id="cb27-2" title="2">df<span class="op">$</span>host_response_rate &lt;-<span class="st"> </span><span class="kw">as.double</span>(df<span class="op">$</span>host_response_rate)</a></code></pre></div>
 <pre><code>## Warning: NAs introduced by coercion</code></pre>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">df<span class="op">$</span>property_type &lt;-<span class="st"> </span><span class="kw">as.factor</span>(df<span class="op">$</span>property_type)</a>
-<a class="sourceLine" id="cb30-2" title="2">df<span class="op">$</span>host_since &lt;-<span class="st"> </span><span class="kw">mdy</span>(df<span class="op">$</span>host_since)</a></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">df<span class="op">$</span>property_type &lt;-<span class="st"> </span><span class="kw">as.factor</span>(df<span class="op">$</span>property_type)</a>
+<a class="sourceLine" id="cb29-2" title="2">df<span class="op">$</span>host_since &lt;-<span class="st"> </span><span class="kw">mdy</span>(df<span class="op">$</span>host_since)</a></code></pre></div>
 <p>🤔 What is the rationale for each of these changes?</p>
 <p>Side note: The last function <code>mdy</code> is different from the others. Normally, working with date-time in R (and in programming in general) is not simple. The <code>lubridate</code> package, which we loaded earlier, makes the job much easier. We’ll not go into the details of date-times. What we did here with <code>mdy</code> is convert character data into date data. We used <code>mdy</code> because the character data were in the form month-date-year. If they were in the form, for example, year-month-date, we would’ve used the function <code>ymd</code>.</p>
 <p>🏏 Change the data type of any other variables you think necessary.</p>
 <div id="missing-values" class="section level2">
 <h2>Missing values</h2>
 <p>Let’s inspect our data for missing values using the function <code>summary</code>, which will give us plenty of other relevant information as well.</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw">summary</span>(df)</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="kw">summary</span>(df)</a></code></pre></div>
 <pre><code>##        id           listing_url            name          
 ##  Min.   :    2595   Length:37762       Length:37762      
 ##  1st Qu.: 8775486   Class :character   Class :character  
@@ -655,38 +656,9 @@ $(document).ready(function () {
 x | y   x OR y
 x &amp; y   x AND y</code></pre>
 <p>Example: Return a dataframe with only those rows where the neighborhood is Chelsea.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">filter</span>(df, neighborhood <span class="op">==</span><span class="st"> &quot;Chelsea&quot;</span>)</a></code></pre></div>
-<pre><code>## # A tibble: 796 x 44
-##        id listing_url name  description host_id host_name host_since
-##     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;     &lt;date&gt;    
-##  1 2.08e7 https://ww~ Huge~ One of a k~ 6433797 Marlon    2013-05-17
-##  2 3.27e7 https://ww~ Huge~ Larger tha~ 244559~ Stewart ~ 2019-02-21
-##  3 3.40e7 https://ww~ Beau~ Beautiful ~ 234227~ Emma      2019-01-03
-##  4 3.37e7 https://ww~ Midt~ This 158 s~ 252604~ Erin      2019-04-01
-##  5 3.42e7 https://ww~ Amaz~ This wonde~ 174313~ Plamen    2018-02-20
-##  6 1.87e6 https://ww~ Big ~ The big ro~ 9751988 Asuka     2013-11-01
-##  7 3.27e7 https://ww~ Larg~ Looking fo~ 244559~ Stewart ~ 2019-02-21
-##  8 1.37e7 https://ww~ Brig~ My light-f~ 803159~ Meghan    2016-06-27
-##  9 1.95e6 https://ww~ 1BD ~ A cozy hom~ 100713~ Trevor    2013-11-17
-## 10 1.91e7 https://ww~ Cozy~ Cozy Effic~ 829201~ Zach      2016-07-10
-## # ... with 786 more rows, and 37 more variables: host_response_time &lt;chr&gt;,
-## #   host_response_rate &lt;dbl&gt;, host_is_superhost &lt;lgl&gt;,
-## #   host_total_listings_count &lt;dbl&gt;, host_verifications &lt;chr&gt;,
-## #   host_identity_verified &lt;lgl&gt;, neighborhood &lt;chr&gt;, borough &lt;chr&gt;,
-## #   zipcode &lt;dbl&gt;, property_type &lt;fct&gt;, accommodates &lt;dbl&gt;,
-## #   bathrooms &lt;dbl&gt;, bedrooms &lt;dbl&gt;, beds &lt;dbl&gt;, bed_type &lt;chr&gt;,
-## #   price &lt;dbl&gt;, security_deposit &lt;dbl&gt;, cleaning_fee &lt;dbl&gt;,
-## #   guests_included &lt;dbl&gt;, extra_people &lt;dbl&gt;, minimum_nights &lt;dbl&gt;,
-## #   calendar_updated &lt;chr&gt;, has_availability &lt;lgl&gt;,
-## #   availability_365 &lt;dbl&gt;, number_of_reviews &lt;dbl&gt;,
-## #   number_of_reviews_ltm &lt;dbl&gt;, review_scores_rating &lt;dbl&gt;,
-## #   review_scores_accuracy &lt;dbl&gt;, review_scores_cleanliness &lt;dbl&gt;,
-## #   review_scores_checkin &lt;dbl&gt;, review_scores_communication &lt;dbl&gt;,
-## #   review_scores_location &lt;dbl&gt;, review_scores_value &lt;dbl&gt;,
-## #   instant_bookable &lt;lgl&gt;, is_business_travel_ready &lt;lgl&gt;,
-## #   cancellation_policy &lt;chr&gt;, reviews_per_month &lt;dbl&gt;</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">df_chelsea &lt;-<span class="st"> </span><span class="kw">filter</span>(df, neighborhood <span class="op">==</span><span class="st"> &quot;Chelsea&quot;</span>)</a></code></pre></div>
 <p>Example: Return a dataframe with only those rows where the price is more than 8000.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="kw">filter</span>(df, price <span class="op">&gt;</span><span class="st"> </span><span class="dv">8000</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">filter</span>(df, price <span class="op">&gt;</span><span class="st"> </span><span class="dv">8000</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 44
 ##       id listing_url name  description host_id host_name host_since
 ##    &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;     &lt;date&gt;    
@@ -713,7 +685,7 @@ x &amp; y   x AND y</code></pre>
 ## #   cancellation_policy &lt;chr&gt;, reviews_per_month &lt;dbl&gt;</code></pre>
 <p>You can combine multiple conditions.</p>
 <p>Example: Return a dataframe with rows where the borough is Manhattan and the price is less than 50.</p>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw">filter</span>(df, borough <span class="op">==</span><span class="st"> &quot;Manhattan&quot;</span>, price <span class="op">&lt;</span><span class="st"> </span><span class="dv">50</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="kw">filter</span>(df, borough <span class="op">==</span><span class="st"> &quot;Manhattan&quot;</span>, price <span class="op">&lt;</span><span class="st"> </span><span class="dv">50</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 520 x 44
 ##        id listing_url name  description host_id host_name host_since
 ##     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;     &lt;date&gt;    
@@ -744,7 +716,7 @@ x &amp; y   x AND y</code></pre>
 ## #   instant_bookable &lt;lgl&gt;, is_business_travel_ready &lt;lgl&gt;,
 ## #   cancellation_policy &lt;chr&gt;, reviews_per_month &lt;dbl&gt;</code></pre>
 <p>Example: Return a dataframe with rows where cancellation_policy is flexible <em>or</em> accommodates more than 2.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="kw">filter</span>(df, cancellation_policy <span class="op">==</span><span class="st"> &quot;flexible&quot;</span> <span class="op">|</span><span class="st"> </span>accommodates <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span> )</a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw">filter</span>(df, cancellation_policy <span class="op">==</span><span class="st"> &quot;flexible&quot;</span> <span class="op">|</span><span class="st"> </span>accommodates <span class="op">&gt;</span><span class="st"> </span><span class="dv">2</span> )</a></code></pre></div>
 <pre><code>## # A tibble: 21,439 x 44
 ##        id listing_url name  description host_id host_name host_since
 ##     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;     &lt;date&gt;    
@@ -775,7 +747,7 @@ x &amp; y   x AND y</code></pre>
 ## #   instant_bookable &lt;lgl&gt;, is_business_travel_ready &lt;lgl&gt;,
 ## #   cancellation_policy &lt;chr&gt;, reviews_per_month &lt;dbl&gt;</code></pre>
 <p>Example: Return a dataframe with rows where number_of_reviews is <em>not</em> 0</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="kw">filter</span>(df, number_of_reviews <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="kw">filter</span>(df, number_of_reviews <span class="op">!=</span><span class="st"> </span><span class="dv">0</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 37,762 x 44
 ##        id listing_url name  description host_id host_name host_since
 ##     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;     &lt;date&gt;    
@@ -820,7 +792,7 @@ x &amp; y   x AND y</code></pre>
 <li>If you want the third through eighth columns: <code>select(name_of_dataframe, 3:8)</code></li>
 </ul>
 <p>Example: Return a dataframe with only the listing_url column.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="kw">select</span>(df, listing_url)</a></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="kw">select</span>(df, listing_url)</a></code></pre></div>
 <pre><code>## # A tibble: 37,762 x 1
 ##    listing_url                          
 ##    &lt;chr&gt;                                
@@ -836,7 +808,7 @@ x &amp; y   x AND y</code></pre>
 ## 10 https://www.airbnb.com/rooms/13987276
 ## # ... with 37,752 more rows</code></pre>
 <p>Example: Return a dataframe with columns host_response_time, cancellation_policy, and neighborhood.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw">select</span>(df, host_response_time, cancellation_policy, neighborhood)</a></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="kw">select</span>(df, host_response_time, cancellation_policy, neighborhood)</a></code></pre></div>
 <pre><code>## # A tibble: 37,762 x 3
 ##    host_response_time cancellation_policy neighborhood    
 ##    &lt;chr&gt;              &lt;chr&gt;               &lt;chr&gt;           
@@ -852,7 +824,7 @@ x &amp; y   x AND y</code></pre>
 ## 10 N/A                flexible            Harlem          
 ## # ... with 37,752 more rows</code></pre>
 <p>Example: Return a dataframe with second through fourth columns</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1"><span class="kw">select</span>(df, <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw">select</span>(df, <span class="dv">2</span><span class="op">:</span><span class="dv">4</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 37,762 x 3
 ##    listing_url           name              description                     
 ##    &lt;chr&gt;                 &lt;chr&gt;             &lt;chr&gt;                           
@@ -876,8 +848,8 @@ x &amp; y   x AND y</code></pre>
 <p>Before I introduce the third verb, let’s take another detour.</p>
 <p>You can’t accomplish a lot with <code>filter</code> and <code>select</code> in isolation. Let’s combine them.</p>
 <p>Here, we’re creating a new dataframe <code>df_expensive</code> by using <code>filter</code> and then we’re selecting some columns of interest from that dataframe.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1">df_expensive &lt;-<span class="st"> </span><span class="kw">filter</span>(df, price <span class="op">&gt;</span><span class="st"> </span><span class="dv">8000</span>)</a>
-<a class="sourceLine" id="cb50-2" title="2"><span class="kw">select</span>(df_expensive, price, neighborhood, listing_url)</a></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1">df_expensive &lt;-<span class="st"> </span><span class="kw">filter</span>(df, price <span class="op">&gt;</span><span class="st"> </span><span class="dv">8000</span>)</a>
+<a class="sourceLine" id="cb48-2" title="2"><span class="kw">select</span>(df_expensive, price, neighborhood, listing_url)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 3
 ##   price neighborhood    listing_url                          
 ##   &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;                                
@@ -888,9 +860,9 @@ x &amp; y   x AND y</code></pre>
 ## 5  8500 Tribeca         https://www.airbnb.com/rooms/23377410</code></pre>
 <p>🤔 More than $8000 per night? What’s going on here? How can we find out more? What should we do with this kind of outliers?</p>
 <p>The above code could be written more succinctly by using pipe <code>%&gt;%</code>.</p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb52-2" title="2"><span class="st">  </span><span class="kw">filter</span>(price <span class="op">&gt;</span><span class="st"> </span><span class="dv">8000</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb52-3" title="3"><span class="st">  </span><span class="kw">select</span>(price, neighborhood, listing_url)</a></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb50-2" title="2"><span class="st">  </span><span class="kw">filter</span>(price <span class="op">&gt;</span><span class="st"> </span><span class="dv">8000</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb50-3" title="3"><span class="st">  </span><span class="kw">select</span>(price, neighborhood, listing_url)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 3
 ##   price neighborhood    listing_url                          
 ##   &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;                                
@@ -901,7 +873,7 @@ x &amp; y   x AND y</code></pre>
 ## 5  8500 Tribeca         https://www.airbnb.com/rooms/23377410</code></pre>
 <p>Let’s try to understand how the pipe works.</p>
 <p><code>filter</code> and <code>select</code> both receive a dataframe as their first parameter (this is true for the other four main verbs as well.) Also, you may have noticed that <code>filter</code> and <code>select</code> return a dataframe (again, it’s true for the others as well). Thanks to this, we can use the pipe to string together several verbs to form a complex query.</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1"><span class="kw">filter</span>(df, price <span class="op">&gt;</span><span class="st"> </span><span class="dv">8000</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1"><span class="kw">filter</span>(df, price <span class="op">&gt;</span><span class="st"> </span><span class="dv">8000</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 44
 ##       id listing_url name  description host_id host_name host_since
 ##    &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;     &lt;date&gt;    
@@ -927,7 +899,7 @@ x &amp; y   x AND y</code></pre>
 ## #   instant_bookable &lt;lgl&gt;, is_business_travel_ready &lt;lgl&gt;,
 ## #   cancellation_policy &lt;chr&gt;, reviews_per_month &lt;dbl&gt;</code></pre>
 <p>is the same as</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(price <span class="op">&gt;</span><span class="st"> </span><span class="dv">8000</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(price <span class="op">&gt;</span><span class="st"> </span><span class="dv">8000</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 44
 ##       id listing_url name  description host_id host_name host_since
 ##    &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;     &lt;date&gt;    
@@ -953,7 +925,7 @@ x &amp; y   x AND y</code></pre>
 ## #   instant_bookable &lt;lgl&gt;, is_business_travel_ready &lt;lgl&gt;,
 ## #   cancellation_policy &lt;chr&gt;, reviews_per_month &lt;dbl&gt;</code></pre>
 <p>Similarly,</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="kw">select</span>(df, price, review_scores_rating, listing_url)</a></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="kw">select</span>(df, price, review_scores_rating, listing_url)</a></code></pre></div>
 <pre><code>## # A tibble: 37,762 x 3
 ##    price review_scores_rating listing_url                          
 ##    &lt;dbl&gt;                &lt;dbl&gt; &lt;chr&gt;                                
@@ -969,7 +941,7 @@ x &amp; y   x AND y</code></pre>
 ## 10   150                   20 https://www.airbnb.com/rooms/13987276
 ## # ... with 37,752 more rows</code></pre>
 <p>is the same as</p>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(price, review_scores_rating, listing_url)</a></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(price, review_scores_rating, listing_url)</a></code></pre></div>
 <pre><code>## # A tibble: 37,762 x 3
 ##    price review_scores_rating listing_url                          
 ##    &lt;dbl&gt;                &lt;dbl&gt; &lt;chr&gt;                                
@@ -987,9 +959,9 @@ x &amp; y   x AND y</code></pre>
 <p>The left side of the pipe is used as the first parameter of the function on the right side of the pipe.</p>
 <p>This is how <code>filter</code>, <code>select</code>, and such functions receive a dataframe, do something to it, return the modified dataframe and passes it on to the next function.</p>
 <p>Here’s again the piped expression. Make sure you understand what’s going on.</p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb62-2" title="2"><span class="st">  </span><span class="kw">filter</span>(price <span class="op">&gt;</span><span class="st"> </span><span class="dv">8000</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb62-3" title="3"><span class="st">  </span><span class="kw">select</span>(price, review_scores_rating, listing_url)</a></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb60-2" title="2"><span class="st">  </span><span class="kw">filter</span>(price <span class="op">&gt;</span><span class="st"> </span><span class="dv">8000</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb60-3" title="3"><span class="st">  </span><span class="kw">select</span>(price, review_scores_rating, listing_url)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 3
 ##   price review_scores_rating listing_url                          
 ##   &lt;dbl&gt;                &lt;dbl&gt; &lt;chr&gt;                                
@@ -1003,23 +975,23 @@ x &amp; y   x AND y</code></pre>
 <h3>Verb: arrange</h3>
 <p><code>arrange</code> is our third verb. (Note that I’m using verb and function interchangeably.) <code>arrange</code> sorts a dataframe based on the values of one or more columns.</p>
 <p>Example: Get the same dataframe as the last code chunk. Sort it by price.</p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb64-2" title="2"><span class="st">  </span><span class="kw">filter</span>(price <span class="op">&gt;</span><span class="st"> </span><span class="dv">8000</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb64-3" title="3"><span class="st">  </span><span class="kw">select</span>(price, review_scores_rating, listing_url) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb64-4" title="4"><span class="st">  </span><span class="kw">arrange</span>(price)</a></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb62-2" title="2"><span class="st">  </span><span class="kw">filter</span>(price <span class="op">&gt;</span><span class="st"> </span><span class="dv">8000</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb62-3" title="3"><span class="st">  </span><span class="kw">select</span>(price, review_scores_rating, listing_url) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb62-4" title="4"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(price))</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 3
 ##   price review_scores_rating listing_url                          
 ##   &lt;dbl&gt;                &lt;dbl&gt; &lt;chr&gt;                                
-## 1  8500                  100 https://www.airbnb.com/rooms/23377410
-## 2  9999                   87 https://www.airbnb.com/rooms/9528920 
-## 3  9999                  100 https://www.airbnb.com/rooms/4737930 
-## 4 10000                   92 https://www.airbnb.com/rooms/13894339
-## 5 10000                  100 https://www.airbnb.com/rooms/7003697</code></pre>
+## 1 10000                   92 https://www.airbnb.com/rooms/13894339
+## 2 10000                  100 https://www.airbnb.com/rooms/7003697 
+## 3  9999                   87 https://www.airbnb.com/rooms/9528920 
+## 4  9999                  100 https://www.airbnb.com/rooms/4737930 
+## 5  8500                  100 https://www.airbnb.com/rooms/23377410</code></pre>
 <p>Example: The same dataframe, but now in descending order of price.</p>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb66-2" title="2"><span class="st">  </span><span class="kw">filter</span>(price <span class="op">&gt;</span><span class="st"> </span><span class="dv">8000</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb66-3" title="3"><span class="st">  </span><span class="kw">select</span>(price, review_scores_rating, listing_url) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb66-4" title="4"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(price))</a></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb64-2" title="2"><span class="st">  </span><span class="kw">filter</span>(price <span class="op">&gt;</span><span class="st"> </span><span class="dv">8000</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb64-3" title="3"><span class="st">  </span><span class="kw">select</span>(price, review_scores_rating, listing_url) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb64-4" title="4"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(price))</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 3
 ##   price review_scores_rating listing_url                          
 ##   &lt;dbl&gt;                &lt;dbl&gt; &lt;chr&gt;                                
@@ -1029,10 +1001,10 @@ x &amp; y   x AND y</code></pre>
 ## 4  9999                  100 https://www.airbnb.com/rooms/4737930 
 ## 5  8500                  100 https://www.airbnb.com/rooms/23377410</code></pre>
 <p>Example: You can add more columns to <code>arrange</code>. Now when price is the same, the order will be based on neighborhood.</p>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb68-2" title="2"><span class="st">  </span><span class="kw">filter</span>(price <span class="op">&gt;</span><span class="st"> </span><span class="dv">8000</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb68-3" title="3"><span class="st">  </span><span class="kw">select</span>(price, neighborhood, listing_url) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb68-4" title="4"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(price), neighborhood)</a></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb66-2" title="2"><span class="st">  </span><span class="kw">filter</span>(price <span class="op">&gt;</span><span class="st"> </span><span class="dv">8000</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb66-3" title="3"><span class="st">  </span><span class="kw">select</span>(price, neighborhood, listing_url) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb66-4" title="4"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(price), neighborhood)</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 3
 ##   price neighborhood    listing_url                          
 ##   &lt;dbl&gt; &lt;chr&gt;           &lt;chr&gt;                                
@@ -1047,7 +1019,7 @@ x &amp; y   x AND y</code></pre>
 <h3>Verb: mutate</h3>
 <p><code>mutate</code> creates a new column by modifying one or more existing columns. It’s better explained by examples.</p>
 <p>Example:</p>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1"><span class="kw">mutate</span>(df, <span class="dt">price_per_person =</span> price <span class="op">/</span><span class="st"> </span>accommodates)</a></code></pre></div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1"><span class="kw">mutate</span>(df, <span class="dt">price_per_person =</span> price <span class="op">/</span><span class="st"> </span>accommodates)</a></code></pre></div>
 <pre><code>## # A tibble: 37,762 x 45
 ##        id listing_url name  description host_id host_name host_since
 ##     &lt;dbl&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt;   &lt;chr&gt;     &lt;date&gt;    
@@ -1084,7 +1056,7 @@ x &amp; y   x AND y</code></pre>
 <h3>Verb: summarize (or summarise)</h3>
 <p><code>summarize</code>, as you’d expect, gives some kind of summary (such as mean, median, min, max) of the values of a given column.</p>
 <p>Example: What is the total number of people that can stay in NYC Airbnbs?</p>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1"><span class="kw">summarize</span>(df, <span class="dt">total_accommodates =</span> <span class="kw">sum</span>(accommodates))</a></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1"><span class="kw">summarize</span>(df, <span class="dt">total_accommodates =</span> <span class="kw">sum</span>(accommodates))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##   total_accommodates
 ##                &lt;dbl&gt;
@@ -1094,19 +1066,19 @@ x &amp; y   x AND y</code></pre>
 <p>Note: The function <code>n</code> doesn’t need a parameter because it just counts the number of rows in the dataframe. This would become more clear in the examples.</p>
 <p>We can also write our own function and use here. But that is a more advanced topic.</p>
 <p>Example: What is the mean rating for accuracy</p>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1"><span class="kw">summarize</span>(df, <span class="dt">mean_accuracy =</span> <span class="kw">mean</span>(review_scores_accuracy))</a></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1"><span class="kw">summarize</span>(df, <span class="dt">mean_accuracy =</span> <span class="kw">mean</span>(review_scores_accuracy))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##   mean_accuracy
 ##           &lt;dbl&gt;
 ## 1            NA</code></pre>
 <p>Hmm, not exactly what we expected. This is because any arithmetic operation involving <code>NA</code> (that is, <em>Not Available</em> or missing values) results in <code>NA</code>.</p>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1"><span class="dv">5</span> <span class="op">+</span><span class="st"> </span><span class="ot">NA</span></a></code></pre></div>
+<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1"><span class="dv">5</span> <span class="op">+</span><span class="st"> </span><span class="ot">NA</span></a></code></pre></div>
 <pre><code>## [1] NA</code></pre>
 <p>Or,</p>
-<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1"><span class="ot">NA</span> <span class="op">/</span><span class="st"> </span><span class="dv">33</span></a></code></pre></div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1"><span class="ot">NA</span> <span class="op">/</span><span class="st"> </span><span class="dv">33</span></a></code></pre></div>
 <pre><code>## [1] NA</code></pre>
 <p>The review_scores_accuracy had several <code>NA</code>s. The correct way of doing this would be:</p>
-<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1"><span class="kw">summarize</span>(df, <span class="dt">mean_accuracy =</span> <span class="kw">mean</span>(review_scores_accuracy, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1"><span class="kw">summarize</span>(df, <span class="dt">mean_accuracy =</span> <span class="kw">mean</span>(review_scores_accuracy, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##   mean_accuracy
 ##           &lt;dbl&gt;
@@ -1114,15 +1086,15 @@ x &amp; y   x AND y</code></pre>
 <p><code>na.rm = TRUE</code> means “remove all NAs before performing arithmetic operations.”</p>
 <p>When we summed the accommodates column earlier, we didn’t add <code>na.rm = TRUE</code> because that column didn’t have any NAs.</p>
 <p>Example: We can have multiple summaries at the same time.</p>
-<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" title="1"><span class="kw">summarize</span>(df, <span class="dt">min_score_value =</span> <span class="kw">min</span>(review_scores_value, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), </a>
-<a class="sourceLine" id="cb82-2" title="2">          <span class="dt">max_score_value =</span> <span class="kw">max</span>(review_scores_value, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1"><span class="kw">summarize</span>(df, <span class="dt">min_score_value =</span> <span class="kw">min</span>(review_scores_value, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>), </a>
+<a class="sourceLine" id="cb80-2" title="2">          <span class="dt">max_score_value =</span> <span class="kw">max</span>(review_scores_value, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 2
 ##   min_score_value max_score_value
 ##             &lt;dbl&gt;           &lt;dbl&gt;
 ## 1               2              10</code></pre>
 <p>Example: What’s the total number of listings in this dataset?</p>
-<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb84-2" title="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>())</a></code></pre></div>
+<div class="sourceCode" id="cb82"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb82-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb82-2" title="2"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>())</a></code></pre></div>
 <pre><code>## # A tibble: 1 x 1
 ##   count
 ##   &lt;int&gt;
@@ -1137,9 +1109,9 @@ x &amp; y   x AND y</code></pre>
 <h3>Verb: group_by</h3>
 <p><code>group_by</code> is one of the most useful functions. It divides the data into different groups and then <code>summarize</code> summarizes each of the groups. This way, we can compare the different groups on various attributes.</p>
 <p>Example: What’s the mean and median price in each of the five boroughs?</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb86-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(borough) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb86-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="kw">mean</span>(price), <span class="kw">median</span>(price))</a></code></pre></div>
+<div class="sourceCode" id="cb84"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb84-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb84-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(borough) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb84-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="kw">mean</span>(price), <span class="kw">median</span>(price))</a></code></pre></div>
 <pre><code>## # A tibble: 5 x 3
 ##   borough       `mean(price)` `median(price)`
 ##   &lt;chr&gt;                 &lt;dbl&gt;           &lt;dbl&gt;
@@ -1150,12 +1122,11 @@ x &amp; y   x AND y</code></pre>
 ## 5 Staten Island          89.3              75</code></pre>
 <p>🏏 Return the same dataframe but sorted by mean price.</p>
 <p>Example: Which are the top 10 neighborhoods by total number of listings?</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb88-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(neighborhood) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb88-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb88-4" title="4"><span class="st">  </span><span class="kw">top_n</span>(<span class="dv">10</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb88-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(count))</a></code></pre></div>
-<pre><code>## Selecting by count</code></pre>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb86-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(neighborhood) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb86-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb86-4" title="4"><span class="st">  </span><span class="kw">top_n</span>(<span class="dv">10</span>, <span class="dt">wt =</span> count) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb86-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(count))</a></code></pre></div>
 <pre><code>## # A tibble: 10 x 2
 ##    neighborhood       count
 ##    &lt;chr&gt;              &lt;int&gt;
@@ -1171,12 +1142,11 @@ x &amp; y   x AND y</code></pre>
 ## 10 Midtown              929</code></pre>
 <p>We introduce a new function <code>top_n</code> here, which returns top n rows (or bottom n rows, when n is negative) ordered by some variable. In the code chunk above, if we had <code>top_n(-10)</code>, we would’ve got the bottom 10 rows.</p>
 <p>Example: Which are the top two neighborhoods in each of the boroughs by number of listings?</p>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb91-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(borough, neighborhood) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb91-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb91-4" title="4"><span class="st">  </span><span class="kw">top_n</span>(<span class="dv">2</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb91-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(count))</a></code></pre></div>
-<pre><code>## Selecting by count</code></pre>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb88-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(borough, neighborhood) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb88-3" title="3"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb88-4" title="4"><span class="st">  </span><span class="kw">top_n</span>(<span class="dv">2</span>, <span class="dt">wt =</span> count) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb88-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(count))</a></code></pre></div>
 <pre><code>## # A tibble: 10 x 3
 ## # Groups:   borough [5]
 ##    borough       neighborhood       count
@@ -1193,11 +1163,11 @@ x &amp; y   x AND y</code></pre>
 ## 10 Staten Island Tompkinsville         42</code></pre>
 <p>🏏 Do the same as above but only for listings where price is more than 500 and property_type is Apartment.</p>
 <p>Example: In Manhattan, which neighborhood has the highest mean price?*</p>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" title="1">df <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb94-2" title="2"><span class="st">  </span><span class="kw">filter</span>(borough <span class="op">==</span><span class="st"> &quot;Manhattan&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb94-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(neighborhood) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb94-4" title="4"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_price =</span> <span class="kw">mean</span>(price)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb94-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(mean_price))</a></code></pre></div>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" title="1">df <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb90-2" title="2"><span class="st">  </span><span class="kw">filter</span>(borough <span class="op">==</span><span class="st"> &quot;Manhattan&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb90-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(neighborhood) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb90-4" title="4"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">mean_price =</span> <span class="kw">mean</span>(price)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb90-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(mean_price))</a></code></pre></div>
 <pre><code>## # A tibble: 32 x 2
 ##    neighborhood       mean_price
 ##    &lt;chr&gt;                   &lt;dbl&gt;
@@ -1224,40 +1194,42 @@ x &amp; y   x AND y</code></pre>
 <p>We’re going to use the ggplot2 package, which we loaded earlier, for some visual exploration of the data. Actually, this is how we should have begun our data exploration. We couldn’t do this because we needed to learn the six verbs first to get the full benefit of ggplot2.</p>
 <p>Unfortunately, we won’t have time today to learn ggplot2. It may be possible to organize a separate session later on visualization in R.</p>
 <p>Example: What’s the distribution of price?</p>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" title="1"><span class="kw">ggplot</span>(df) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(price))</a></code></pre></div>
+<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" title="1"><span class="kw">ggplot</span>(df) <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(price))</a></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-70-1.png" width="768" /></p>
 <p>🏏 What’s the problem with this histogram? How can we solve this?</p>
 <p>Example: Compare price distribution of different boroughs.</p>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb98-2" title="2"><span class="st">  </span><span class="kw">filter</span>(price <span class="op">&lt;</span><span class="st"> </span><span class="dv">500</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb98-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> price, <span class="dt">fill =</span> borough))</a></code></pre></div>
+<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb94-2" title="2"><span class="st">  </span><span class="kw">filter</span>(price <span class="op">&lt;</span><span class="st"> </span><span class="dv">500</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb94-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> price, <span class="dt">fill =</span> borough))</a></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-72-1.png" width="768" /></p>
 <p>Example: Do the same, but with boxplots</p>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb100-2" title="2"><span class="st">  </span><span class="kw">filter</span>(price <span class="op">&lt;</span><span class="st"> </span><span class="dv">500</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb100-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> borough, <span class="dt">y =</span> price))</a></code></pre></div>
+<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb96-2" title="2"><span class="st">  </span><span class="kw">filter</span>(price <span class="op">&lt;</span><span class="st"> </span><span class="dv">500</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb96-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> borough, <span class="dt">y =</span> price))</a></code></pre></div>
 <p><img src="index_files/figure-html/unnamed-chunk-73-1.png" width="768" /></p>
 <p>Example: Which neighborhoods have the highest number Of listings that have review_scores_value less than 5.</p>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb101-2" title="2"><span class="st">  </span><span class="kw">filter</span>(review_scores_value <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb101-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(borough, neighborhood) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb101-4" title="4"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb101-5" title="5"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb101-6" title="6"><span class="st">  </span><span class="kw">top_n</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb101-7" title="7"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(neighborhood, count), <span class="dt">y =</span> count)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb101-8" title="8"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" title="1">df <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb97-2" title="2"><span class="st">  </span><span class="kw">filter</span>(review_scores_value <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb97-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(borough, neighborhood) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb97-4" title="4"><span class="st">  </span><span class="kw">summarize</span>(<span class="dt">count =</span> <span class="kw">n</span>()) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb97-5" title="5"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb97-6" title="6"><span class="st">  </span><span class="kw">top_n</span>(<span class="dv">5</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb97-7" title="7"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>(<span class="kw">aes</span>(<span class="dt">x =</span> <span class="kw">reorder</span>(neighborhood, count), <span class="dt">y =</span> count)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb97-8" title="8"><span class="st">  </span><span class="kw">coord_flip</span>()</a></code></pre></div>
 <pre><code>## Selecting by count</code></pre>
 <p><img src="index_files/figure-html/unnamed-chunk-74-1.png" width="768" /></p>
 </div>
 <div id="keep-learning" class="section level1">
 <h1>Keep Learning</h1>
-<p>If you like <code>dplyr</code> and the other tidyverse packages we used in this workshop, <a href="https://r4ds.had.co.nz">R for Data Science</a> is an excellent resource. Hadley Wickham, the author of the tidyverse packages, wrote that book.</p>
-<p><a href="https://swirlstats.com">Swirl</a> is a unique tool – it teaches you R and data science interactively right on the console. Follow the instructions <a href="https://swirlstats.com/students.html">here</a>.</p>
-<p>To learn how to do statistics using R, you can watch <a href="https://www.youtube.com/watch?v=_V8eKsto3Ug">this YouTube video</a></p>
-<p>To learn R’s programming concepts (which we didn’t cover in detail today), you can watch <a href="https://www.youtube.com/watch?v=fDRa82lxzaU">this YouTube video</a></p>
-<p><a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html">An Introduction to R</a> is perhaps the most comprehensive introduction. <em>But it’s not the best place to start if you’re a complete beginner.</em></p>
+<ul>
+<li><p>If you like <code>dplyr</code> and the other tidyverse packages we used in this workshop, <a href="https://r4ds.had.co.nz">R for Data Science</a> is an excellent resource. Hadley Wickham, the author of the tidyverse packages, wrote that book.</p></li>
+<li><p><a href="https://swirlstats.com">Swirl</a> teaches R and data science interactively right on the console. Follow the instructions <a href="https://swirlstats.com/students.html">here</a>.</p></li>
+<li><p>To learn how to do statistics using R, you can watch <a href="https://www.youtube.com/watch?v=_V8eKsto3Ug">this YouTube video</a></p></li>
+<li><p>To learn R’s programming concepts (which we didn’t cover in detail today), you can watch <a href="https://www.youtube.com/watch?v=fDRa82lxzaU">this YouTube video</a></p></li>
+<li><p><a href="https://cran.r-project.org/doc/manuals/r-release/R-intro.html">An Introduction to R</a> is perhaps the most comprehensive introduction. <em>But it’s not the best place to start if you’re a complete beginner.</em></p></li>
+</ul>
 <div id="download-cheatsheets" class="section level2">
 <h2>Download Cheatsheets</h2>
 <ul>
@@ -1267,7 +1239,6 @@ x &amp; y   x AND y</code></pre>
 <li><a href="https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf">Data import</a></li>
 <li><a href="https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf">R Markdown</a></li>
 <li><a href="https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf">Data visualization with ggplot2</a></li>
-<li></li>
 </ul>
 </div>
 </div>

@@ -15,11 +15,12 @@ output:
 
 # Goals
 
-- Get a feel for what R is all about
-- Get familiar with an analysis workflow that goes beyond Excel
-- Learn some powerful techniques of exploring a large-ish dataset
+- Understand how a coding-based analysis workflow is different from one based on spreadsheets
+- Get familiar with R (a programming language) and RStudio (a desktop program where you write R code)
+- Learn some powerful analytic techniques, especially useful for exploring a large-ish dataset
+- Learn a few fundamental programming concepts (variable, function, data type)
 
-We'll do these by taking a close look at some interesting data: the Airbnb listings in New York City as of August 2019.
+We'll accomplish these objectives by taking a close look at an interesting dataset, one that contains detailed data on over 35,000 recent (August 2019) Airbnb listings, all in New York City.
 
 It's okay if you can't start using these techniques right away after the workshop. To be comfortable with a tool like R takes some time and practice. Your exposure today to these tools and techniques will likely show you R's possibilities and motivate you to keep learning.I suggest some learning resources at the end of this document.
 
@@ -38,12 +39,14 @@ This document is an *R Notebook*. An R Notebook contains commentary interspersed
 What you're reading is *commentary* and what you see below is the container for a code chunk.
 
 ```{r}
-# The code goes here
+
+
 ```
 
 To run a code chunk, click on the little triangle at the right edge of the code chunk. Or, use the keyboard shortcut **CTRL + SHIFT + ENTER** (Windows) or **CMD + SHIFT + ENTER** (Mac).
 
 🏏 Run the chunk below and see what happens.
+
 ```{r}
 a <- 5 + 7
 print(a)
@@ -58,8 +61,6 @@ Feel free to add your commentary and code anywhere in this document. You can alw
 To write your own code chunk, look for the **insert** button above and then select **R**. Or, use the keyboard shortcut **CTRL + ALT + I** (Windows) or **CMD + OPTION + I** (Mac). 
 
 🏏 Place the cursor below and create a container for writing code. Now write some code and run it. For example, find the result of `3543 / 562`.
-
-
 
 
 # The Data
@@ -119,9 +120,9 @@ The map gives us an idea about the relative size and location of the five boroug
 
 We'll first install a few packages that we'll need at different stages of the analysis. This may take a minute or two. 
 
-The symbol `#` at the start of a line means the line is a comment. These lines are left alone (that is, not executed) when you run a code chunk. You can use comments either to explain your code within a code chunk or to temporarily prevent a line of code from executing. 
+Take a look at the code chunk below and note the `#`s at the start some lines. The `#` at the start of a line means the line is a comment. These lines are not executed when you run a code chunk. You can use comments either to explain your code within a code chunk or to temporarily prevent a line of code from executing. The latter is known as "commenting out" a line of code.
 
-If the lines containing `install.packages` are "commented out," please remove the `#`s before running the code chunk.
+If the lines containing `install.packages` are "commented out" below, please remove the `#`s before running the code chunk.
 
 ```{r, message=FALSE}
 # For loading data
@@ -162,14 +163,16 @@ df <- read_csv("data/airbnb_nyc_data.csv")
 
 The first thing to check is whether the data have been successfully loaded and assigned to the variable (here `df`). We don't see any error — which is a good sign. We can also see the variable `df` in the environment pane (usually to the right of this code editor pane – click on "Environment" if hidden).
 
-The next thing to check is whether `read_csv` was able to correctly infer the data type of each variable.
+Next you should check whether `read_csv` was able to correctly infer the data type of each column.
 
-For a better glimpse, use the function `glimpse`.
+For a better glimpse at the data, use the function `glimpse`.
 
 🤔 How am I supposed to know what functions are out there?
 
 ```{r}
+
 glimpse(df)
+
 ```
 
 What you see within the angular brackets `<...>` next to each column name is the data type of that column. 
@@ -184,7 +187,7 @@ Let's take a detour.
 
 # Detour: Programming Concepts
 
-## Variables (programming)
+## Variable
 
 In programming, a variable stores some value. Our code can then reference the name of the variable to do something with it. 
 
@@ -208,7 +211,7 @@ print(foo * 10)
 print(bar)
 ```
 
-Important: The word `variable` can be ambiguous. You may be familiar with the term as used in statistics. For example, if some data is about people, some variables could be age, sex, income and address. The names of the columns of a dataframe are variables in the statistical sense. Usually, the context would clarify which meaning is intended.
+Important: The word `variable` can be ambiguous. You may be familiar with the term as used in statistics. For example, if you have some data about people, some variables there could be age, sex, income and address. The names of the columns of a dataframe are variables in this sense. Usually, the context would clarify which meaning is intended.
 
 Tip: Give short descriptive names to your variables. This will make the code easy to follow.
 
@@ -218,9 +221,9 @@ Tip: Give short descriptive names to your variables. This will make the code eas
 
 ```
 
-## Data structures
+## Data types
 
-`o need to know a little about data types. These are the main ones:
+We also need to know a little about data types. These are the main ones:
 
 - Integer: such as 2, 543, 90.
 - Double: numbers other than integers, such as 4.56, 1/33. Doubles are always approximations.
@@ -233,13 +236,13 @@ There are some other important data types:
 - `factor`, for categorical variables (here "variable" in statistical sense). A categorical variable is one that can take on a limited, fixed number of values.
 - `date-time` and `date`
 
-
-## Functions
 ## Data structures
 
-`vector`, `list`, `matrix`, and `dataframe` are some of the main data-structures for storing data in R.
+`vector`, `list`, `matrix`, and `dataframe` are the main data-structures for storing data in R.
 
-Think of a vector as simply a sequence of data. For example, a column in a data table is a vector. This is how you create a vector: `c(element1, element2, element3, ...)`
+Think of a vector as simply a collection of data elements, where each element is of the same data type. 
+
+This is how you create a vector: `c(element1, element2, element3, ...)`
 
 ```{r}
 vec <- c(3, 5, 10, 20)
@@ -247,7 +250,9 @@ print(vec)
 ```
 
 
-You're familiar with Excel functions, such as `sum()` or `average()`. The concept of functions in a programming language is no different. You give some values (called parameters) to a function. The function does something with the values and returns a new value. So `sum(3, 6, 1)` returns 10. Here `sum` is the name of the function, 3, 6, 1 are parameters, and 10 is the returned value.
+## Functions
+
+You're likely familiar with Excel functions, such as `sum()` or `average()`. The concept of functions in a programming language is no different. You give some values (called parameters) to a function. The function does something with the values and returns a new value. So `sum(3, 6, 1)` returns 10. Here `sum` is the name of the function, 3, 6, 1 are parameters, and 10 is the returned value.
 
 Most of the times, you'll use functions written by other people. But it's not too difficult to write your own functions. Here's a simple one. All it does is add 10 to a given number and then return the total.
 
@@ -287,7 +292,7 @@ calculated_mean <- mean(vec2)
 message("The mean of the vector vec2 is ", calculated_mean)
 ```
 
-🏏 Calculate the sum, median, and standard deviation (hint: sd) of the vector vec2.
+🏏 Calculate the sum, median, and standard deviation (hint: `sd`) of the vector `vec2`.
 
 ```{r}
 
@@ -305,14 +310,16 @@ message("The mean of the vector vec2 is ", calculated_mean)
 
 ```
 
-# Back to Analysi[Quiz Time]
+[Quiz Time]
 
-s
+# Back to Analysis
 
 Let's take another look at the data types of our dataframe.
 
 ```{r}
+
 glimpse(df)
+
 ```
 
 Some of the data types don't look right. Let's correct them.
@@ -399,7 +406,7 @@ Use these *logical operators* to create the conditions:
 Example: Return a dataframe with only those rows where the neighborhood is Chelsea.
 
 ```{r}
-filter(df, neighborhood == "Chelsea")
+df_chelsea <- filter(df, neighborhood == "Chelsea")
 ```
 
 Example: Return a dataframe with only those rows where the price is more than 8000.
@@ -428,11 +435,13 @@ filter(df, number_of_reviews != 0)
 Note: when multiple conditions are separated by commas, the conditions are assumed to have *and* logical operator between them. Using `&` instead would be the same thing. For *or* and other logical operators, we have to explicitly use the appropriate logical operator (e.g. `|` for *or*).
 
 🏏 Return a dataframe with rows where number of bedrooms is not 1 and property_type is House
+
 ```{r}
 
 ```
 
 🏏 Return a dataframe with rows where host_response_time is within an hour or host_response_rate is more than 90% or calendar was updated today
+
 ```{r}
 
 ```
@@ -513,7 +522,6 @@ Let's try to understand how the pipe works.
 
 `filter` and `select` both receive a dataframe as their first parameter (this is true for the other four main verbs as well.) Also, you may have noticed that `filter` and `select` return a dataframe (again, it's true for the others as well). Thanks to this, we can use the pipe to string together several verbs to form a complex query.
 
-
 ```{r}
 filter(df, price > 8000)
 ```
@@ -557,8 +565,8 @@ Example: Get the same dataframe as the last code chunk. Sort it by price.
 ```{r}
 df %>% 
   filter(price > 8000) %>% 
-  select(price, review_scores_rating, listing_url) %>% 
-  arrange(price)
+  select(price, review_scores_rating, listing_url) %>%
+  arrange(desc(price))
 ```
 
 Example: The same dataframe, but now in descending order of price.
@@ -566,7 +574,7 @@ Example: The same dataframe, but now in descending order of price.
 ```{r}
 df %>% 
   filter(price > 8000) %>% 
-  select(price, review_scores_rating, listing_url) %>% 
+  select(price, review_scores_rating, listing_url) %>%
   arrange(desc(price))
 ```
 
@@ -672,25 +680,31 @@ df %>%
 
 
 🏏 The host who's been with Airbnb NYC for the longest time started on which date?
+
 ```{r}
 
 ```
+
 🏏 Find the standard deviation and mean of the price variable.
+
 ```{r}
 
 ```
 
 🏏 Count the number of unique zip_codes in the data. Hint `distinct` and `n`.
+
 ```{r}
 
 ```
 
 🏏 How many listings have perfect 100 for review_scores_rating (which is the overall rating shown as stars on the listing's webpage)?
+
 ```{r}
 
 ```
 
 🏏 How many listings have a perfect 100 of review_scores_rating and cost less than 50?
+
 ```{r}
 
 ```
@@ -709,37 +723,42 @@ df %>%
 ```
 
 🏏 Return the same dataframe but sorted by mean price.
+
 ```{r}
 
 ```
 
 Example: Which are the top 10 neighborhoods by total number of listings?
+
 ```{r}
 df %>% 
   group_by(neighborhood) %>% 
   summarize(count = n()) %>% 
-  top_n(10) %>% 
+  top_n(10, wt = count) %>% 
   arrange(desc(count))
 ```
 
 We introduce a new function `top_n` here, which returns top n rows (or bottom n rows, when n is negative) ordered by some variable. In the code chunk above, if we had `top_n(-10)`, we would've got the bottom 10 rows.
 
 Example: Which are the top two neighborhoods in each of the boroughs by number of listings?
+
 ```{r}
 df %>% 
   group_by(borough, neighborhood) %>% 
   summarize(count = n()) %>% 
-  top_n(2) %>% 
+  top_n(2, wt = count) %>% 
   arrange(desc(count))
 ```
 
 
 🏏 Do the same as above but only for listings where price is more than 500 and property_type is Apartment.
+
 ```{r}
 
 ```
 
 Example: In Manhattan, which neighborhood has the highest mean price?*
+
 ```{r}
 df %>%
   filter(borough == "Manhattan") %>% 
@@ -749,17 +768,20 @@ df %>%
 ```
 
 🏏 In Bronx and Queens, what's the mean price for different property_type?
+
 ```{r}
 
 ```
 
 🏏 For each borough, which neighborhood has the highest variance in price?
+
 ```{r}
 
 ```
 
 
 🏏 Which combination of property_type and room_type has the highest median price?
+
 ```{r}
 
 ```
@@ -778,16 +800,19 @@ We're going to use the ggplot2 package, which we loaded earlier, for some visual
 Unfortunately, we won't have time today to learn ggplot2. It may be possible to organize a separate session later on visualization in R.
 
 Example: What's the distribution of price?
+
 ```{r}
 ggplot(df) + geom_histogram(aes(price))
 ```
 
 🏏 What's the problem with this histogram? How can we solve this?
+
 ```{r}
 
 ```
 
 Example: Compare price distribution of different boroughs.
+
 ```{r}
 df %>% 
   filter(price < 500) %>% 
@@ -795,6 +820,7 @@ df %>%
 ```
 
 Example: Do the same, but with boxplots
+
 ```{r}
 df %>% 
   filter(price < 500) %>% 
@@ -802,6 +828,7 @@ df %>%
 ```
 
 Example: Which neighborhoods have the highest number Of listings that have review_scores_value less than 5.
+
 ```{r}
 df %>% 
   filter(review_scores_value < 5) %>% 
@@ -817,15 +844,15 @@ df %>%
 
 # Keep Learning
 
-If you like `dplyr` and the other tidyverse packages we used in this workshop, [R for Data Science](https://r4ds.had.co.nz) is an excellent resource. Hadley Wickham, the author of the tidyverse packages, wrote that book.
+- If you like `dplyr` and the other tidyverse packages we used in this workshop, [R for Data Science](https://r4ds.had.co.nz) is an excellent resource. Hadley Wickham, the author of the tidyverse packages, wrote that book.
 
-[Swirl](https://swirlstats.com) is a unique tool – it teaches you R and data science interactively right on the console. Follow the instructions [here](https://swirlstats.com/students.html).
+- [Swirl](https://swirlstats.com) teaches R and data science interactively right on the console. Follow the instructions [here](https://swirlstats.com/students.html).
 
-To learn how to do statistics using R, you can watch [this YouTube video](https://www.youtube.com/watch?v=_V8eKsto3Ug)
+- To learn how to do statistics using R, you can watch [this YouTube video](https://www.youtube.com/watch?v=_V8eKsto3Ug)
 
-To learn R's programming concepts (which we didn't cover in detail today), you can watch [this YouTube video](https://www.youtube.com/watch?v=fDRa82lxzaU)
+- To learn R's programming concepts (which we didn't cover in detail today), you can watch [this YouTube video](https://www.youtube.com/watch?v=fDRa82lxzaU)
 
-[An Introduction to R](https://cran.r-project.org/doc/manuals/r-release/R-intro.html) is perhaps the most comprehensive introduction. *But it's not the best place to start if you're a complete beginner.*
+- [An Introduction to R](https://cran.r-project.org/doc/manuals/r-release/R-intro.html) is perhaps the most comprehensive introduction. *But it's not the best place to start if you're a complete beginner.*
 
 ## Download Cheatsheets
 
@@ -835,4 +862,3 @@ To learn R's programming concepts (which we didn't cover in detail today), you c
 - [Data import](https://github.com/rstudio/cheatsheets/raw/master/data-import.pdf)
 - [R Markdown](https://github.com/rstudio/cheatsheets/raw/master/rmarkdown-2.0.pdf)
 - [Data visualization with ggplot2](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf)
-- 
