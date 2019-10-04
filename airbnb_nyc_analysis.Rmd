@@ -22,7 +22,7 @@ output:
 
 We'll accomplish these objectives by taking a close look at an interesting dataset, one that contains detailed data on over 35,000 recent (August 2019) Airbnb listings, all in New York City.
 
-It's okay if you can't start using these techniques right away after the workshop. To be comfortable with a tool like R takes some time and practice. Your exposure today to these tools and techniques will likely show you R's possibilities and motivate you to keep learning.I suggest some learning resources at the end of this document.
+It's okay if you can't start using these techniques right away after the workshop. To be comfortable with a tool like R takes some time and practice. Your exposure today to these tools and techniques will likely show you R's possibilities and motivate you to keep learning. I suggest some learning resources at the end of this document.
 
 # RStudio
 
@@ -36,7 +36,7 @@ Before starting our analysis, let's understand how this document works. (I'm ass
 
 This document is an *R Notebook*. An R Notebook contains commentary interspersed with code chunks. The code chunks can be run (executed) independently and interactively. The output will appear below the code chunk. R Notebooks are easy to convert to well-formatted final documents as a pdf file, a webpage, or an MS Word file. [More here](http://rmarkdown.rstudio.com/r_notebooks.html)
 
-What you're reading is *commentary* and what you see below is the container for a code chunk.
+What you're reading is *commentary* and what you see below is the container for a *code* chunk.
 
 ```{r}
 
@@ -170,9 +170,7 @@ For a better glimpse at the data, use the function `glimpse`.
 🤔 How am I supposed to know what functions are out there?
 
 ```{r}
-
 glimpse(df)
-
 ```
 
 What you see within the angular brackets `<...>` next to each column name is the data type of that column. 

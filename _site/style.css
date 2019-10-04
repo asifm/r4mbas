@@ -49,6 +49,6 @@ h1 {
 	padding-bottom: 0.3em;
 }
 #content pre code {
-	font-family: Consolas, "Roboto Mono", Cousine;
-	font-size: 1rem;
+	font-family: "Roboto Mono", Cousine;
+	/*font-size: 1rem;*/
 }
